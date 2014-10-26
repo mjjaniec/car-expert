@@ -24,3 +24,5 @@ off_road(jeep_renegade).
 
 fit_passengers(Car, Passengers):- max_passengers(Car, P), Passengers =< P.
 fit_cargo(Car, Cargo):- cargo_capacity(Car, X), Cargo =< X.
+
+best_car(Car, Passengers, Cargo):- fit_passengers(Car, Passengers), fit_cargo(Car, Cargo).

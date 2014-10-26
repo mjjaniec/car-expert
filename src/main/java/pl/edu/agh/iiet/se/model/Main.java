@@ -4,12 +4,13 @@ import jpl.*;
 import jpl.Float;
 import jpl.Integer;
 
+import java.util.Hashtable;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String... args) {
-        KnowledgeBase knowledgeBase = new KnowledgeBase("prolog/KnowledgeBase.pl");
+        KnowledgeBase knowledgeBase = new KnowledgeBase("src/main/prolog/KnowledgeBase.pl");
 
         float passengers;
         float cargo;
@@ -20,8 +21,13 @@ public class Main {
 
             Variable car = new Variable("Car");
 
-            Compound passT = new Compound(KnowledgeBase.FIT_PASSENGERS, new Term[] {car, new Integer((long) passengers)});
-            Compound cargoT = new Compound(KnowledgeBase.FIT_CARGO, new Term[] {car, new Float(cargo)});
+            Query bestCar = new Query(KnowledgeBase.BEST_CAR, new Term[] {car, new Integer((long) passengers), new Float(cargo)});
+            Hashtable solution = bestCar.oneSolution();
+            if(solution != null) {
+                System.out.println(solution.get(car.name()));
+            } else {
+                System.out.println("No car that meet all needs");
+            }
 
 
         }

@@ -10,11 +10,12 @@ public class KnowledgeBase {
 
     public static final String FIT_PASSENGERS = "fit_passengers";
     public static final String FIT_CARGO = "fit_cargo";
+    public static final String BEST_CAR = "best_car";
 
 
     public KnowledgeBase(String knowledgeBaseFileName) {
         Query loadQuery = new Query(CONSULT, new Term[]{new Atom(knowledgeBaseFileName)});
-        if (loadQuery.query()) {
+        if (!loadQuery.query()) {
             throw new RuntimeException("unable to lad knowledge base");
         }
     }
