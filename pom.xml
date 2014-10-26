@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pl.edu.agh.iiet.se</groupId>
+    <artifactId>car-expert</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Repository Switchboard</name>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
+        <!-- it seams to be good, but there is no documentation, no even hello-world -->
+        <!--<dependency>
+            <groupId>net.sf.jlogic</groupId>
+            <artifactId>jlog</artifactId>
+            <version>1.3.6</version>
+        </dependency>-->
+
+
+        <dependency>
+            <groupId>jpl</groupId>
+            <artifactId>jpl</artifactId>
+            <version>3.1.4-alpha</version>
+        </dependency>
+
+
+    </dependencies>
+
+
+</project>
