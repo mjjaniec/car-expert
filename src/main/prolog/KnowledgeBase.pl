@@ -10,12 +10,10 @@ max_passengers(jeep_renegade, 5).
 max_passengers(solaris_urbino, 120).
 max_passengers(scania_v8, 3).
 
-/*cargo_capacity(car, int(m3)) */
-cargo_capacity(renault_clio, 0.5).
+/*cargo_capacity(car, int[m3]) */
 cargo_capacity(renault_clio, 1.2).
 cargo_capacity(solaris_urbino, 0).
 cargo_capacity(scania_v8, 80).
-
 
 
 personal(renault_clio).
