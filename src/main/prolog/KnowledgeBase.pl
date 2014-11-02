@@ -16,9 +16,9 @@ cargo_capacity(solaris_urbino, 0).
 cargo_capacity(scania_v8, 80).
 
 
-personal(renault_clio).
-personal(jeep_renegade).
-off_road(jeep_renegade).
+personal(car(renault_clio)).
+personal(car(jeep_renegade)).
+off_road(car(jeep_renegade)).
 
 fit_passengers(Passengers, X):- max_passengers(Car, P), Passengers =< P, X = car(Car).
 fit_cargo(Cargo, X):- cargo_capacity(Car, C), Cargo =< C, X = car(Car).

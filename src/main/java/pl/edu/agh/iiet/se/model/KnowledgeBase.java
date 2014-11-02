@@ -7,9 +7,6 @@ import jpl.Term;
 
 public class KnowledgeBase {
     private static final String CONSULT = "consult";
-
-    public static final String FIT_PASSENGERS = "fit_passengers";
-    public static final String FIT_CARGO = "fit_cargo";
     public static final String BEST_CAR = "best_car";
 
 

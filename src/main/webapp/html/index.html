@@ -4,28 +4,69 @@
     <script type="text/javascript">
         var carExpertApp = angular.module('carExpertApp', []);
 
-        carExpertApp.factory("kbService", function($http) {
-            function query(data) {
-                return $http.post("/api/kb/", data, {
-                    responseType: "json",
-                    timeout: 10000
-                })
-            }
-
-            return {
-                query: query
-            }
-        });
-
         carExpertApp.controller('carExpertCtl', function ($scope, kbService) {
             $scope.answers = [];
+            $scope.params = [];
+            $scope.carDetails = {};
 
             $scope.query = function(carDetails) {
-                kbService.query(carDetails).success(function(data) {
+                var items = [];
+                var selectsNames = [];
+                for(var i in $scope.params) {
+                    var param = $scope.params[i];
+                    if(param.element == "select") {
+                        selectsNames.push(param.name);
+                    }
+                }
+
+                for(var prop in carDetails) {
+                    if(selectsNames.indexOf(prop) != -1) {
+                        items.push({"desc": carDetails[prop]});
+                    } else {
+                        items.push({"desc": prop, "value": carDetails[prop]})
+                    }
+                }
+
+                kbService.query(items).success(function(data) {
                     $scope.answers = data;
                 });
             };
 
+            kbService.params().success(function (data) {
+               $scope.params = data;
+               for(var i in data) {
+                   if(data[i].element == "select") {
+                       $scope.carDetails[data[i].name] = data[i].values[0];
+                   }
+               }
+
+            });
+
+        });
+
+        carExpertApp.filter("firstUp", function() {
+            return function(input) {
+                return input[0].toUpperCase() + input.substring(1);
+            };
+        });
+
+        carExpertApp.factory("kbService", function($http) {
+            function query(data) {
+                return $http.post("/api/kb/query", data, {
+                    responseType: "json",
+                    timeout: 10000
+                })
+            }
+            function params() {
+                return $http.get("/api/kb/parameters", {
+                    responseType: "json",
+                    timeout: 10000
+                })
+            }
+            return {
+                query: query,
+                params: params
+            }
         });
 
 
@@ -34,8 +75,12 @@
 <body ng-controller="carExpertCtl">
 
 <form novalidate name="queryForm">
-    Passengers: <input name="passenger" type="number" min="1" required ng-model="carDetails.passengers" /><br />
-    Cargo: <input name="cargo" type="number" step="0.01" min="0" required ng-model="carDetails.cargo" /><br />
+    <div ng-repeat="param in params" ng-switch="param.element">
+        {{param.name | firstUp}}:
+        <input ng-switch-when="input" ng-model="carDetails[param.name]" ng-name={{param.name}} min="0" type="number" ng-step="{{param.step}}" required/> {{param.unit}}
+        <select ng-switch-when="select" ng-model="carDetails[param.name]" ng-name={{param.name}} ng-options="value for value in param.values"></select>
+        <br/>
+    </div>
     <button ng-click="query(carDetails)" ng-disabled="queryForm.$invalid">Query</button>
 </form>
 
@@ -45,7 +90,7 @@
 
 <div ng-repeat="answer in answers">
     <p>answer = {{answer.answer}}</p>
-    <p>image = {{answer.imageUrl}}</p>
+    <img ng-src="{{answer.imageUrl}}"></img>
 </div>
 </body>
 </html>
