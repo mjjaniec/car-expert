@@ -3,8 +3,11 @@ package pl.edu.agh.iiet.se.model;
 import jpl.*;
 import jpl.Float;
 import jpl.Integer;
+import lombok.core.configuration.FileSystemSourceCache;
 
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -21,14 +24,12 @@ public class Main {
 
             Variable car = new Variable("Car");
 
-            Query bestCar = new Query(KnowledgeBase.BEST_CAR, new Term[] {car, new Integer((long) passengers), new Float(cargo)});
-            Hashtable solution = bestCar.oneSolution();
-            if(solution != null) {
-                System.out.println(solution.get(car.name()));
-            } else {
-                System.out.println("No car that meet all needs");
+            Query bestCar = new Query(KnowledgeBase.BEST_CAR, new Term[] {Util.termArrayToList(new Term[] {new Compound("fit_passengers", new Term[] {new Integer((long) passengers), car}),
+                                    new Compound("fit_cargo", new Term[]{new Float(cargo), car})}), car});
+            Hashtable[] solutions = bestCar.allSolutions();
+            for (Hashtable solution : solutions) {
+                System.out.println(solution.get(car.name()).toString());
             }
-
 
         }
     }

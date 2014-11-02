@@ -2,6 +2,7 @@ package pl.edu.agh.iiet.se.service;
 
 import jpl.*;
 import jpl.Float;
+import jpl.Integer;
 import pl.edu.agh.iiet.se.dto.KBAnswer;
 import pl.edu.agh.iiet.se.dto.KBParameters;
 import pl.edu.agh.iiet.se.model.KnowledgeBase;
@@ -16,7 +17,8 @@ public class KnowledgeBaseService {
     public List<String> matchingCars(KBParameters parameters) {
         Variable car = new Variable("Car");
 
-        Query bestCar = new Query(KnowledgeBase.BEST_CAR, new Term[] {car, new jpl.Integer((long) parameters.getPassengers()), new Float(parameters.getCargo())});
+        Query bestCar = new Query(KnowledgeBase.BEST_CAR, new Term[] {Util.termArrayToList(new Term[] {new Compound("fit_passengers", new Term[] {new Integer((long) parameters.getPassengers()), car}),
+                new Compound("fit_cargo", new Term[]{new Float(parameters.getCargo()), car})}), car});
         Hashtable[] solutions = bestCar.allSolutions();
         List<String> result = new LinkedList<String>();
         for (Hashtable solution : solutions) {

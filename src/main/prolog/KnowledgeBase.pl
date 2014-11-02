@@ -1,7 +1,7 @@
-renault_clio.       /* city car */
-jeep_renegade.      /* off-road car */
-solaris_urbino.     /* city bus */
-scania_v8.          /* big cargo truck */
+car(renault_clio).       /* city car */
+car(jeep_renegade).      /* off-road car */
+car(solaris_urbino).     /* city bus */
+car(scania_v8).          /* big cargo truck */
 
 
 /*max_passengers(car, int)*/
@@ -20,7 +20,9 @@ personal(renault_clio).
 personal(jeep_renegade).
 off_road(jeep_renegade).
 
-fit_passengers(Car, Passengers):- max_passengers(Car, P), Passengers =< P.
-fit_cargo(Car, Cargo):- cargo_capacity(Car, X), Cargo =< X.
+fit_passengers(Passengers, X):- max_passengers(Car, P), Passengers =< P, X = car(Car).
+fit_cargo(Cargo, X):- cargo_capacity(Car, C), Cargo =< C, X = car(Car).
 
-best_car(Car, Passengers, Cargo):- fit_passengers(Car, Passengers), fit_cargo(Car, Cargo).
+best_car([], X):- car(Y), X = car(Y).
+best_car([H|T], Car):- H, best_car(T, Car).
+
