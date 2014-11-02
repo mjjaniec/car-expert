@@ -1,15 +1,30 @@
+<!DOCTYPE html>
 <html ng-app="carExpertApp">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/resources/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet/less" type="text/css" href="/resources/css/main.less" />
     <script src="resources/js/angular.js" type="text/javascript"></script>
+    <script src="resources/js/ui-bootstrap-tpls-0.1.0.js" type="text/javascript"></script>
+    <script>
+        less = {
+            env: "development",
+            poll: 1000
+        };
+    </script>
+    <script src="resources/js/less.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var carExpertApp = angular.module('carExpertApp', []);
+    var carExpertApp = angular.module('carExpertApp', ['ui.bootstrap']);
 
         carExpertApp.controller('carExpertCtl', function ($scope, kbService) {
+            $scope.queried = false;
             $scope.answers = [];
             $scope.params = [];
             $scope.carDetails = {};
 
             $scope.query = function(carDetails) {
+                $scope.queried = true;
                 var items = [];
                 var selectsNames = [];
                 for(var i in $scope.params) {
@@ -27,8 +42,13 @@
                     }
                 }
 
-                kbService.query(items).success(function(data) {
-                    $scope.answers = data;
+                kbService.query(items).success(function(data, status) {
+                    if(status === 200) {
+                        $scope.answers = data;
+                    } else {
+                        $scope.answers = [];
+                    }
+
                 });
             };
 
@@ -47,6 +67,12 @@
         carExpertApp.filter("firstUp", function() {
             return function(input) {
                 return input[0].toUpperCase() + input.substring(1);
+            };
+        });
+
+        carExpertApp.filter("capitalize", function() {
+            return function(input) {
+                return input.replace(/_/g, " ");
             };
         });
 
@@ -77,20 +103,26 @@
 <form novalidate name="queryForm">
     <div ng-repeat="param in params" ng-switch="param.element">
         {{param.name | firstUp}}:
-        <input ng-switch-when="input" ng-model="carDetails[param.name]" ng-name={{param.name}} min="0" type="number" ng-step="{{param.step}}" required/> {{param.unit}}
+        <input value="0" ng-switch-when="input" ng-model="carDetails[param.name]" ng-name={{param.name}} min="0" type="number" ng-step="{{param.step}}" required/> {{param.unit}}
         <select ng-switch-when="select" ng-model="carDetails[param.name]" ng-name={{param.name}} ng-options="value for value in param.values"></select>
         <br/>
     </div>
-    <button ng-click="query(carDetails)" ng-disabled="queryForm.$invalid">Query</button>
+    <button class="btn btn-default" ng-click="query(carDetails)" ng-disabled="queryForm.$invalid">Query</button>
 </form>
 
-<div ng-hide="answers.length">
+<div ng-show="answers.length == 0 && queried">
     No car matches specified query
 </div>
 
-<div ng-repeat="answer in answers">
-    <p>answer = {{answer.answer}}</p>
-    <img ng-src="{{answer.imageUrl}}"></img>
+<div ng-show="answers.length" >
+    <carousel interval="3000">
+        <slide ng-repeat="answer in answers" active="answer.active">
+            <img ng-src="{{answer.imageUrl}}" style="margin:auto;">
+            <div class="carousel-caption">
+                <h4>{{answer.answer | capitalize}}</h4>
+            </div>
+        </slide>
+    </carousel>
 </div>
 </body>
 </html>
