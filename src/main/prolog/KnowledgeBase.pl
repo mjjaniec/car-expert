@@ -1,29 +1,37 @@
-car(renault_clio).       /* city car */
-car(jeep_renegade).      /* off-road car */
-car(solaris_urbino).     /* city bus */
-car(scania_v8).          /* big cargo truck */
+:- dynamic
+    max_passengers/1,
+    cargo_capacity/1,
+    transport/0,
+    personal/0,
+    off_road/0.
 
 
-/*max_passengers(car, int)*/
-max_passengers(renault_clio, 5).
-max_passengers(jeep_renegade, 5).
-max_passengers(solaris_urbino, 120).
-max_passengers(scania_v8, 3).
+car(renault_clio):- fit_passengers(5),
+                    fit_cargo(1.2),
+                    personal.
 
-/*cargo_capacity(car, int[m3]) */
-cargo_capacity(renault_clio, 1.2).
-cargo_capacity(solaris_urbino, 0).
-cargo_capacity(scania_v8, 80).
-cargo_capacity(jeep_renegade, 0).
+car(jeep_renegade):- or(personal, off_road),
+                     fit_passengers(5),
+                     fit_cargo(0).
 
+car(solaris_urbino):- transport,
+                      fit_passengers(120),
+                      fit_cargo(0).
 
-personal(car(renault_clio)).
-personal(car(jeep_renegade)).
-off_road(car(jeep_renegade)).
+car(scania_v8):- transport,
+                 fit_passengers(3),
+                 fit_cargo(80).
 
-fit_passengers(Passengers, X):- max_passengers(Car, P), Passengers =< P, X = car(Car).
-fit_cargo(Cargo, X):- cargo_capacity(Car, C), Cargo =< C, X = car(Car).
+car(test):- transport,
+            fit_passengers(0),
+            fit_cargo(0).
 
-best_car([], X):- car(Y), X = car(Y).
-best_car([H|T], Car):- H, best_car(T, Car).
+or(A, B):- A;B.
+fit_passengers(Passengers):- max_passengers(P), P =< Passengers.
+fit_cargo(Cargo):- cargo_capacity(C), C =< Cargo.
+
+int_assertz(T):- T; \+ T, assertz(T).
+
+best_car([], X):- car(X).
+best_car([H|T], Car):- int_assertz(H), best_car(T, Car).
 

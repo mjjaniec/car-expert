@@ -24,13 +24,11 @@ public class KnowledgeBaseService {
         List<Term> requestedCarFeatures = new LinkedList<Term>();
         for(KBParameter parameter: parameters) {
             KBParameterDesc parameterDesc = parameter.getDesc();
-            List<Term> terms = new LinkedList<Term>();
             if(parameterDesc.hasValue()) {
-                terms.add(parameterDesc.createWithValue(parameter.getValue()));
+                requestedCarFeatures.add(new Compound(parameterDesc.predicateName(), new Term[]{parameterDesc.createWithValue(parameter.getValue())}));
+            } else {
+                requestedCarFeatures.add(new Atom(parameterDesc.predicateName()));
             }
-
-            terms.add(car);
-            requestedCarFeatures.add(new Compound(parameterDesc.predicateName(),terms.toArray(new Term[0])));
         }
 
         Query bestCar = new Query(KnowledgeBase.BEST_CAR, new Term[] {Util.termArrayToList(requestedCarFeatures.toArray(new Term[0])), car});
@@ -38,7 +36,6 @@ public class KnowledgeBaseService {
         List<String> result = new LinkedList<String>();
         for (Hashtable solution : solutions) {
             String matchingCar = solution.get(car.name()).toString();
-            matchingCar = matchingCar.substring(4, matchingCar.length() - 1); // solution has form car(X)
             result.add(matchingCar);
         }
 

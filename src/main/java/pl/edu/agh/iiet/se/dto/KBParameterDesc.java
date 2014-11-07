@@ -7,12 +7,12 @@ import lombok.SneakyThrows;
 import java.lang.reflect.Constructor;
 
 public enum KBParameterDesc {
-    passengers(jpl.Integer.class, Long.TYPE), cargo(jpl.Float.class, Double.TYPE), personal, off_road;
+    max_passengers(jpl.Integer.class, Long.TYPE), cargo_capacity(jpl.Float.class, Double.TYPE), personal, off_road, transport;
 
     private KBParameterDesc(Class type, Class constructorType) {
         this.type = type;
         this.constructorType = constructorType;
-        this.predicateName = "fit_" + name();
+        this.predicateName = name();
     }
 
     private KBParameterDesc() {

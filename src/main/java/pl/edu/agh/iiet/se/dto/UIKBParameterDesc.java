@@ -18,9 +18,9 @@ public class UIKBParameterDesc {
 
     public static List<UIKBParameterDesc> params() {
         List<UIKBParameterDesc> params = new LinkedList<UIKBParameterDesc>();
-        params.add(intConstraints(new UIKBParameterDesc("input", "passengers")));
-        params.add(m3(floatConstraints(new UIKBParameterDesc("input", "cargo"))));
-        params.add(values(new UIKBParameterDesc("select", "type"), "off_road", "personal"));
+        params.add(intConstraints(new UIKBParameterDesc("input", "max_passengers")));
+        params.add(m3(floatConstraints(new UIKBParameterDesc("input", "cargo_capacity"))));
+        params.add(values(new UIKBParameterDesc("select", "type"), "off_road", "personal", "transport"));
         return params;
     }
 
