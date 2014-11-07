@@ -22,10 +22,6 @@ car(scania_v8):- transport,
                  fit_passengers(3),
                  fit_cargo(80).
 
-car(test):- transport,
-            fit_passengers(0),
-            fit_cargo(0).
-
 or(A, B):- A;B.
 fit_passengers(Passengers):- max_passengers(P), P =< Passengers.
 fit_cargo(Cargo):- cargo_capacity(C), C =< Cargo.
