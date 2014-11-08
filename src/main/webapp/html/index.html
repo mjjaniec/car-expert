@@ -219,8 +219,11 @@
 </div>
 </div>
     <div class="col-md-6 answer-col">
-        <div ng-show="answers.length == 0 && queried">
-            No car matches specified query
+        <div ng-show="answers.length == 0 && queried" class="panel panel-default">
+            <span class="glyphicon glyphicon-comment"></span>
+            <div class="panel-body">
+                <h3>No car matches specified query</h3>
+            </div>
         </div>
 
         <div ng-show="answers.length" >
