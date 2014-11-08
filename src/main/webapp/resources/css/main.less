@@ -1,14 +1,32 @@
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+@import "vendor/bootstrap/bootstrap";
+@import "vendor/bootstrap/mixins/border-radius";
+@import (inline) "vendor/select/select.min.css";
 
-.img-size() {
-  height: 400px !important;
-  width: 600px;
+.border-radius(@val) {
+  .border-top-radius(@val);
+  .border-right-radius(@val);
+  .border-bottom-radius(@val);
+  .border-left-radius(@val);
 }
 
-.carousel {
-  .img-size();
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.container {
+  margin-top: 10px;
+}
+
+@height: 400px;
+.answer-col {
 
   img {
-    .img-size();
+    .border-radius(5px);
+    height: @height !important;
+  }
+
+}
+
+@media (min-width: @screen-md-min)  {
+  .container {
+    margin-top: 100px;
   }
 }

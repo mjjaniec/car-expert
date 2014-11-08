@@ -7,7 +7,9 @@ import lombok.SneakyThrows;
 import java.lang.reflect.Constructor;
 
 public enum KBParameterDesc {
-    max_passengers(jpl.Integer.class, Long.TYPE), cargo_capacity(jpl.Float.class, Double.TYPE), personal, off_road, transport;
+    max_passengers(jpl.Integer.class, Long.TYPE),
+    cargo_capacity(jpl.Float.class, Double.TYPE),
+    personal, off_road, transport;
 
     private KBParameterDesc(Class type, Class constructorType) {
         this.type = type;

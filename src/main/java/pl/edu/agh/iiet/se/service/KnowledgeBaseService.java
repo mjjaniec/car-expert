@@ -3,20 +3,29 @@ package pl.edu.agh.iiet.se.service;
 import jpl.*;
 import jpl.Float;
 import jpl.Integer;
+import lombok.Cleanup;
 import pl.edu.agh.iiet.se.dto.KBParameter;
 import pl.edu.agh.iiet.se.dto.KBParameterDesc;
 import pl.edu.agh.iiet.se.dto.UIKBParameterDesc;
-import pl.edu.agh.iiet.se.model.KnowledgeBase;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class KnowledgeBaseService {
-    static {
-        new KnowledgeBase("src/main/prolog/KnowledgeBase.pl");
+    private static final String CONSULT = "consult";
+    private static final String BEST_CAR = "best_car";
+    private static final String CLEANUP = "cleanup";
+    private static final String kbLocation = "src/main/prolog/KnowledgeBase.pl";
+
+    {
+        loadEngine();
+    }
+
+    private void loadEngine() {
+        Query loadQuery = new Query(CONSULT, new Term[]{new Atom(kbLocation)});
+        if (!loadQuery.hasSolution()) {
+            throw new RuntimeException("unable to load knowledge base");
+        }
     }
 
     public List<String> matchingCars(List<KBParameter> parameters) {
@@ -31,15 +40,24 @@ public class KnowledgeBaseService {
             }
         }
 
-        Query bestCar = new Query(KnowledgeBase.BEST_CAR, new Term[] {Util.termArrayToList(requestedCarFeatures.toArray(new Term[0])), car});
+        Query bestCar = new Query(BEST_CAR, new Term[] {Util.termArrayToList(requestedCarFeatures.toArray(new Term[0])), car});
         Hashtable[] solutions = bestCar.allSolutions();
-        List<String> result = new LinkedList<String>();
+        Set<String> result = new HashSet<String>();
         for (Hashtable solution : solutions) {
             String matchingCar = solution.get(car.name()).toString();
             result.add(matchingCar);
         }
 
-        return result;
+        cleanKb();
+
+        return new ArrayList<String>(result);
+    }
+
+    private void cleanKb() {
+        Query cleanup = new Query(new Atom(CLEANUP));
+        if (!cleanup.hasSolution()) {
+            throw new RuntimeException("unable to clean knowledge base");
+        }
     }
 
     public List<UIKBParameterDesc> parameters() {
