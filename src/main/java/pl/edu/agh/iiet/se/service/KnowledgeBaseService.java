@@ -1,21 +1,18 @@
 package pl.edu.agh.iiet.se.service;
 
 import jpl.*;
-import jpl.Float;
-import jpl.Integer;
-import lombok.Cleanup;
 import pl.edu.agh.iiet.se.dto.KBParameter;
 import pl.edu.agh.iiet.se.dto.KBParameterDesc;
 import pl.edu.agh.iiet.se.dto.UIKBParameterDesc;
 
-import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class KnowledgeBaseService {
     private static final String CONSULT = "consult";
     private static final String BEST_CAR = "best_car";
     private static final String CLEANUP = "cleanup";
-    private static final String kbLocation = "src/main/prolog/KnowledgeBase.pl";
+    //private static final String kbLocation = "/home/mjjaniec/car-expert/src/main/prolog/KnowledgeBase.pl";
+    private static final String kbLocation = "/home/mjjaniec/car-expert/src/main/prolog/test.pl";
 
     {
         loadEngine();
@@ -30,19 +27,20 @@ public class KnowledgeBaseService {
 
     public List<String> matchingCars(List<KBParameter> parameters) {
         Variable car = new Variable("Car");
-        List<Term> requestedCarFeatures = new LinkedList<Term>();
-        for(KBParameter parameter: parameters) {
+        List<Term> requestedCarFeatures = new LinkedList<>();
+        for (KBParameter parameter : parameters) {
             KBParameterDesc parameterDesc = parameter.getDesc();
-            if(parameterDesc.hasValue()) {
+            if (parameterDesc.hasValue()) {
                 requestedCarFeatures.add(new Compound(parameterDesc.predicateName(), new Term[]{parameterDesc.createWithValue(parameter.getValue())}));
             } else {
                 requestedCarFeatures.add(new Atom(parameterDesc.predicateName()));
             }
         }
 
-        Query bestCar = new Query(BEST_CAR, new Term[] {Util.termArrayToList(requestedCarFeatures.toArray(new Term[0])), car});
+        Query bestCar = new Query(BEST_CAR, new Term[]{
+                Util.termArrayToList(requestedCarFeatures.toArray(new Term[requestedCarFeatures.size()])), car});
         Hashtable[] solutions = bestCar.allSolutions();
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<>();
         for (Hashtable solution : solutions) {
             String matchingCar = solution.get(car.name()).toString();
             result.add(matchingCar);
@@ -50,7 +48,7 @@ public class KnowledgeBaseService {
 
         cleanKb();
 
-        return new ArrayList<String>(result);
+        return new ArrayList<>(result);
     }
 
     private void cleanKb() {

@@ -6,16 +6,13 @@ import pl.edu.agh.iiet.se.service.KnowledgeBaseService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -29,7 +26,7 @@ public class KnowledgeBase {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("parameters")
-    public Response parameters(){
+    public Response parameters() {
         return Response.ok(kbService.parameters()).build();
     }
 
@@ -38,15 +35,15 @@ public class KnowledgeBase {
     @Consumes("application/json")
     @Path("query")
     public Response getAnswers(@Context HttpServletResponse servletResponse,
-                              @NotNull List<KBParameter> parameters) throws MalformedURLException {
+                               @NotNull List<KBParameter> parameters) throws MalformedURLException {
 
         List<String> matchingCars = kbService.matchingCars(parameters);
-        List<KBAnswer> answers = new ArrayList<KBAnswer>(matchingCars.size());
-        for(String carName: matchingCars) {
+        List<KBAnswer> answers = new ArrayList<>(matchingCars.size());
+        for (String carName : matchingCars) {
             answers.add(new KBAnswer(carName, "/resources/img/" + carName + ".jpg"));
         }
-        Response response = null;
-        if(answers.isEmpty()) {
+        Response response;
+        if (answers.isEmpty()) {
             response = Response.noContent().build();
         } else {
             response = Response.ok(answers).build();

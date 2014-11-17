@@ -1,38 +1,50 @@
 package pl.edu.agh.iiet.se.dto;
 
 import jpl.Term;
-import lombok.Getter;
 import lombok.SneakyThrows;
+import pl.edu.agh.iiet.se.enums.*;
 
 import java.lang.reflect.Constructor;
 
 public enum KBParameterDesc {
+
+    // numeric items
     max_passengers(jpl.Integer.class, Long.TYPE),
-    cargo_capacity(jpl.Float.class, Double.TYPE),
-    personal, off_road, transport;
+    max_cargo(jpl.Float.class, Double.TYPE),
+    mass(jpl.Float.class, Double.TYPE),
+
+    // indirect features
+    equipment(jpl.Compound.class, Equipment.class),
+    type(jpl.Compound.class, Type.class),
+
+    //enum features
+    category(jpl.Compound.class, Category.class),
+    chassis(jpl.Compound.class, Chassis.class),
+    gearbox(jpl.Compound.class, Gearbox.class),
+    power(jpl.Compound.class, Power.class),
+
+    //boolean features
+    feature(jpl.Atom.class, Feature.class);
 
     private KBParameterDesc(Class type, Class constructorType) {
-        this.type = type;
+        this.jplType = type;
         this.constructorType = constructorType;
         this.predicateName = name();
     }
 
-    private KBParameterDesc() {
-        this.predicateName = name();
-        this.type = null;  // ugly but should work for now
-    }
 
-    private Class type;
+    private Class jplType;
     private Class constructorType;
     private String predicateName;
 
+    @SuppressWarnings("unchecked")
     @SneakyThrows
     public Term createWithValue(Object value) {
-        if(!hasValue()) {
+        if (!hasValue()) {
             throw new IllegalStateException("Should not be called -- has no value");
         }
 
-        Constructor constructor =  type.getConstructor(constructorType);
+        Constructor constructor = jplType.getConstructor(constructorType);
         return (Term) constructor.newInstance(value);
     }
 
@@ -41,6 +53,6 @@ public enum KBParameterDesc {
     }
 
     public boolean hasValue() {
-        return type != null;
+        return jplType != null;
     }
 }

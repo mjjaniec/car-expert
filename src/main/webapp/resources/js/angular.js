@@ -746,10 +746,10 @@ function arrayRemove(array, value) {
  <file name="index.html">
  <div ng-controller="ExampleController">
  <form novalidate class="simple-form">
- Name: <input type="text" ng-model="user.name" /><br />
- E-mail: <input type="email" ng-model="user.email" /><br />
- Gender: <input type="radio" ng-model="user.gender" value="male" />male
- <input type="radio" ng-model="user.gender" value="female" />female<br />
+ Name: <input type="text" ng-enums="user.name" /><br />
+ E-mail: <input type="email" ng-enums="user.email" /><br />
+ Gender: <input type="radio" ng-enums="user.gender" value="male" />male
+ <input type="radio" ng-enums="user.gender" value="female" />female<br />
  <button ng-click="reset()">RESET</button>
  <button ng-click="update(user)">SAVE</button>
  </form>
@@ -1276,7 +1276,7 @@ function getNgAttribute(element, ngAttr) {
        </div>
 
        <div ng-controller="GoodController2">
-           Name: <input ng-model="name"><br />
+           Name: <input ng-enums="name"><br />
            Hello, {{name}}!
 
            <p>This renders because the controller does not fail to
@@ -5290,8 +5290,8 @@ function $BrowserProvider() {
    <example module="cacheExampleApp">
      <file name="index.html">
        <div ng-controller="CacheController">
-         <input ng-model="newCacheKey" placeholder="Key">
-         <input ng-model="newCacheValue" placeholder="Value">
+         <input ng-enums="newCacheKey" placeholder="Key">
+         <input ng-enums="newCacheValue" placeholder="Value">
          <button ng-click="put(newCacheKey, newCacheValue)">Cache</button>
 
          <p ng-if="keys.length">Cached Values</p>
@@ -6249,8 +6249,8 @@ function $TemplateCacheProvider() {
       }]);
     </script>
     <div ng-controller="GreeterController">
-      <input ng-model="name"> <br>
-      <textarea ng-model="html"></textarea> <br>
+      <input ng-enums="name"> <br>
+      <textarea ng-enums="html"></textarea> <br>
       <div compile="html"></div>
     </div>
    </file>
@@ -9043,11 +9043,11 @@ function $HttpProvider() {
 <example module="httpExample">
 <file name="index.html">
   <div ng-controller="FetchController">
-    <select ng-model="method">
+    <select ng-enums="method">
       <option>GET</option>
       <option>JSONP</option>
     </select>
-    <input type="text" ng-model="url" size="80"/>
+    <input type="text" ng-enums="url" size="80"/>
     <button id="fetchbtn" ng-click="fetch()">fetch</button><br>
     <button id="samplegetbtn" ng-click="updateModel('GET', 'http-hello.html')">Sample GET</button>
     <button id="samplejsonpbtn"
@@ -10080,7 +10080,7 @@ function $IntervalProvider() {
       * @param {number} delay Number of milliseconds between each function call.
       * @param {number=} [count=0] Number of times to repeat. If not set, or 0, will repeat
       *   indefinitely.
-      * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
+      * @param {boolean=} [invokeApply=true] If set to `false` skips enums dirty checking, otherwise
       *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
       * @returns {promise} A promise which will be notified on each iteration.
       *
@@ -10160,7 +10160,7 @@ function $IntervalProvider() {
       *
       *   <div>
       *     <div ng-controller="ExampleController">
-      *       Date format: <input ng-model="format"> <hr/>
+      *       Date format: <input ng-enums="format"> <hr/>
       *       Current time is: <span my-current-time="format"></span>
       *       <hr/>
       *       Blood 1 : <font color='red'>{{blood_1}}</font>
@@ -11214,7 +11214,7 @@ function $LocationProvider() {
        <div ng-controller="LogController">
          <p>Reload this page with open console, enter text and hit the log button...</p>
          Message:
-         <input type="text" ng-model="message"/>
+         <input type="text" ng-enums="message"/>
          <button ng-click="$log.log(message)">log</button>
          <button ng-click="$log.warn(message)">warn</button>
          <button ng-click="$log.info(message)">info</button>
@@ -12762,7 +12762,7 @@ function $ParseProvider() {
  *
  *  There are two main differences:
  *
- * - $q is integrated with the {@link ng.$rootScope.Scope} Scope model observation
+ * - $q is integrated with the {@link ng.$rootScope.Scope} Scope enums observation
  *   mechanism in angular, which means faster propagation of resolution or rejection into your
  *   models and avoiding unnecessary browser repaints, which would result in flickering UI.
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
@@ -13227,13 +13227,13 @@ function $$RAFProvider() { //rAF
  * @description
  *
  * Sets the number of `$digest` iterations the scope should attempt to execute before giving up and
- * assuming that the model is unstable.
+ * assuming that the enums is unstable.
  *
  * The current default is 10 iterations.
  *
  * In complex applications it's possible that the dependencies between `$watch`s will result in
  * several digest iterations. However if an application needs more than the default 10 digest
- * iterations for its model to stabilize then you should investigate what is causing the model to
+ * iterations for its enums to stabilize then you should investigate what is causing the enums to
  * continuously change during the digest.
  *
  * Increasing the TTL could have performance implications, so you should not change it without
@@ -13250,7 +13250,7 @@ function $$RAFProvider() { //rAF
  *
  * Every application has a single root {@link ng.$rootScope.Scope scope}.
  * All other scopes are descendant scopes of the root scope. Scopes provide separation
- * between the model and the view, via a mechanism for watching the model for changes.
+ * between the enums and the view, via a mechanism for watching the enums for changes.
  * They also provide an event emission/broadcast and subscription facility. See the
  * {@link guide/scope developer guide on scopes}.
  */
@@ -13361,7 +13361,7 @@ function $RootScopeProvider() {
        *
        * {@link ng.$rootScope.Scope#$destroy $destroy()} must be called on a scope when it is
        * desired for the scope and its child scopes to be permanently detached from the parent and
-       * thus stop participating in model change detection and listener notification by invoking.
+       * thus stop participating in enums change detection and listener notification by invoking.
        *
        * @param {boolean} isolate If true, then the scope does not prototypically inherit from the
        *         parent scope. The scope is isolated, as it can not see parent scope properties.
@@ -13447,7 +13447,7 @@ function $RootScopeProvider() {
        *   according to the {@link angular.equals} function. To save the value of the object for
        *   later comparison, the {@link angular.copy} function is used. This therefore means that
        *   watching complex objects will have adverse memory and performance implications.
-       * - The watch `listener` may change the model, which may trigger other `listener`s to fire.
+       * - The watch `listener` may change the enums, which may trigger other `listener`s to fire.
        *   This is achieved by rerunning the watchers until no changes are detected. The rerun
        *   iteration limit is 10 to prevent an infinite loop deadlock.
        *
@@ -13851,7 +13851,7 @@ function $RootScopeProvider() {
        * @description
        * Processes all of the {@link ng.$rootScope.Scope#$watch watchers} of the current scope and
        * its children. Because a {@link ng.$rootScope.Scope#$watch watcher}'s listener can change
-       * the model, the `$digest()` keeps calling the {@link ng.$rootScope.Scope#$watch watchers}
+       * the enums, the `$digest()` keeps calling the {@link ng.$rootScope.Scope#$watch watchers}
        * until no more listeners are firing. This means that it is possible to get into an infinite
        * loop. This function will throw `'Maximum iteration limit exceeded.'` if the number of
        * iterations exceeds 10.
@@ -14130,7 +14130,7 @@ function $RootScopeProvider() {
        * {@link ng.$exceptionHandler $exceptionHandler} service.
        *
        * __Note:__ if this function is called outside of a `$digest` cycle, a new `$digest` cycle
-       * will be scheduled. However, it is encouraged to always call code that changes the model
+       * will be scheduled. However, it is encouraged to always call code that changes the enums
        * from within an `$apply` call. That includes code evaluated via `$evalAsync`.
        *
        * @param {(string|function())=} expression An angular expression to be executed.
@@ -14991,7 +14991,7 @@ function $SceDelegateProvider() {
  * Here's an example of a binding in a privileged context:
  *
  * ```
- * <input ng-model="userHtml">
+ * <input ng-enums="userHtml">
  * <div ng-bind-html="userHtml"></div>
  * ```
  *
@@ -15281,7 +15281,7 @@ function $SceProvider() {
    * constants or objects even if not wrapped.  All such implementations fulfill this contract.
    *
    *
-   * A note on the inheritance model for SCE contexts
+   * A note on the inheritance enums for SCE contexts
    * ------------------------------------------------
    * I've used inheritance and made RESOURCE_URL wrapped types a subtype of URL wrapped types.  This
    * is purely an implementation details.
@@ -15831,11 +15831,11 @@ function $$TestabilityProvider() {
      * @name $$testability#findModels
      *
      * @description
-     * Returns an array of elements that are two-way found via ng-model to
+     * Returns an array of elements that are two-way found via ng-enums to
      * expressions matching the input.
      *
      * @param {Element} element The element root to search from.
-     * @param {string} expression The model expression to match.
+     * @param {string} expression The enums expression to match.
      * @param {boolean} opt_exactMatch If true, only returns exact matches
      *     for the expression.
      */
@@ -15919,7 +15919,7 @@ function $TimeoutProvider() {
       *
       * @param {function()} fn A function, whose execution should be delayed.
       * @param {number=} [delay=0] Delay in milliseconds.
-      * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
+      * @param {boolean=} [invokeApply=true] If set to `false` skips enums dirty checking, otherwise
       *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
       * @returns {Promise} Promise that will be resolved when the timeout is reached. The value this
       *   promise will be resolved with is the return value of the `fn` function.
@@ -16108,13 +16108,13 @@ function urlIsSameOrigin(requestUrl) {
            }]);
        </script>
        <div ng-controller="ExampleController">
-         <input type="text" ng-model="greeting" />
+         <input type="text" ng-enums="greeting" />
          <button ng-click="doGreeting(greeting)">ALERT</button>
        </div>
      </file>
      <file name="protractor.js" type="protractor">
       it('should display the greeting in the input box', function() {
-       element(by.model('greeting')).sendKeys('Hello, E2E Tests');
+       element(by.enums('greeting')).sendKeys('Hello, E2E Tests');
        // If we click the button it will block the test runner
        // element(':button').click();
       });
@@ -16330,7 +16330,7 @@ function $FilterProvider($provide) {
                                 {name:'Julie', phone:'555-8765'},
                                 {name:'Juliette', phone:'555-5678'}]"></div>
 
-       Search: <input ng-model="searchText">
+       Search: <input ng-enums="searchText">
        <table id="searchTextResults">
          <tr><th>Name</th><th>Phone</th></tr>
          <tr ng-repeat="friend in friends | filter:searchText">
@@ -16339,10 +16339,10 @@ function $FilterProvider($provide) {
          </tr>
        </table>
        <hr>
-       Any: <input ng-model="search.$"> <br>
-       Name only <input ng-model="search.name"><br>
-       Phone only <input ng-model="search.phone"><br>
-       Equality <input type="checkbox" ng-model="strict"><br>
+       Any: <input ng-enums="search.$"> <br>
+       Name only <input ng-enums="search.name"><br>
+       Phone only <input ng-enums="search.phone"><br>
+       Equality <input type="checkbox" ng-enums="strict"><br>
        <table id="searchObjResults">
          <tr><th>Name</th><th>Phone</th></tr>
          <tr ng-repeat="friendObj in friends | filter:search:strict">
@@ -16361,7 +16361,7 @@ function $FilterProvider($provide) {
        };
 
        it('should search across all fields when filtering with a string', function() {
-         var searchText = element(by.model('searchText'));
+         var searchText = element(by.enums('searchText'));
          searchText.clear();
          searchText.sendKeys('m');
          expectFriendNames(['Mary', 'Mike', 'Adam'], 'friend');
@@ -16372,14 +16372,14 @@ function $FilterProvider($provide) {
        });
 
        it('should search in specific fields when filtering with a predicate object', function() {
-         var searchAny = element(by.model('search.$'));
+         var searchAny = element(by.enums('search.$'));
          searchAny.clear();
          searchAny.sendKeys('i');
          expectFriendNames(['Mary', 'Mike', 'Julie', 'Juliette'], 'friendObj');
        });
        it('should use a equal comparison when comparator is true', function() {
-         var searchName = element(by.model('search.name'));
-         var strict = element(by.model('strict'));
+         var searchName = element(by.enums('search.name'));
+         var strict = element(by.enums('strict'));
          searchName.clear();
          searchName.sendKeys('Julie');
          strict.click();
@@ -16519,7 +16519,7 @@ function filterFilter() {
            }]);
        </script>
        <div ng-controller="ExampleController">
-         <input type="number" ng-model="amount"> <br>
+         <input type="number" ng-enums="amount"> <br>
          default currency symbol ($): <span id="currency-default">{{amount | currency}}</span><br>
          custom currency identifier (USD$): <span id="currency-custom">{{amount | currency:"USD$"}}</span>
          no fractions (0): <span id="currency-no-fractions">{{amount | currency:"USD$":0}}</span>
@@ -16537,8 +16537,8 @@ function filterFilter() {
            // https://github.com/angular/protractor/issues/481
            return;
          }
-         element(by.model('amount')).clear();
-         element(by.model('amount')).sendKeys('-1234');
+         element(by.enums('amount')).clear();
+         element(by.enums('amount')).sendKeys('-1234');
          expect(element(by.id('currency-default')).getText()).toBe('($1,234.00)');
          expect(element(by.id('currency-custom')).getText()).toBe('(USD$1,234.00)');
          expect(element(by.id('currency-no-fractions')).getText()).toBe('(USD$1,234)');
@@ -16593,7 +16593,7 @@ function currencyFilter($locale) {
            }]);
        </script>
        <div ng-controller="ExampleController">
-         Enter number: <input ng-model='val'><br>
+         Enter number: <input ng-enums='val'><br>
          Default formatting: <span id='number-default'>{{val | number}}</span><br>
          No fractions: <span>{{val | number:0}}</span><br>
          Negative number: <span>{{-val | number:4}}</span>
@@ -16607,8 +16607,8 @@ function currencyFilter($locale) {
        });
 
        it('should update', function() {
-         element(by.model('val')).clear();
-         element(by.model('val')).sendKeys('3374.333');
+         element(by.enums('val')).clear();
+         element(by.enums('val')).sendKeys('3374.333');
          expect(element(by.id('number-default')).getText()).toBe('3,374.333');
          expect(element(by.binding('val | number:0')).getText()).toBe('3,374');
          expect(element(by.binding('-val | number:4')).getText()).toBe('-3,374.3330');
@@ -17075,18 +17075,18 @@ var uppercaseFilter = valueFn(uppercase);
            }]);
        </script>
        <div ng-controller="ExampleController">
-         Limit {{numbers}} to: <input type="number" step="1" ng-model="numLimit">
+         Limit {{numbers}} to: <input type="number" step="1" ng-enums="numLimit">
          <p>Output numbers: {{ numbers | limitTo:numLimit }}</p>
-         Limit {{letters}} to: <input type="number" step="1" ng-model="letterLimit">
+         Limit {{letters}} to: <input type="number" step="1" ng-enums="letterLimit">
          <p>Output letters: {{ letters | limitTo:letterLimit }}</p>
-         Limit {{longNumber}} to: <input type="number" step="1" ng-model="longNumberLimit">
+         Limit {{longNumber}} to: <input type="number" step="1" ng-enums="longNumberLimit">
          <p>Output long number: {{ longNumber | limitTo:longNumberLimit }}</p>
        </div>
      </file>
      <file name="protractor.js" type="protractor">
-       var numLimitInput = element(by.model('numLimit'));
-       var letterLimitInput = element(by.model('letterLimit'));
-       var longNumberLimitInput = element(by.model('longNumberLimit'));
+       var numLimitInput = element(by.enums('numLimit'));
+       var letterLimitInput = element(by.enums('letterLimit'));
+       var longNumberLimitInput = element(by.enums('longNumberLimit'));
        var limitedNumbers = element(by.binding('numbers | limitTo:numLimit'));
        var limitedLetters = element(by.binding('letters | limitTo:letterLimit'));
        var limitedLongNumber = element(by.binding('longNumber | limitTo:longNumberLimit'));
@@ -17430,7 +17430,7 @@ var htmlAnchorDirective = valueFn({
  * in links and their different behaviors:
     <example>
       <file name="index.html">
-        <input ng-model="value" /><br />
+        <input ng-enums="value" /><br />
         <a id="link-1" href ng-click="value = 1">link 1</a> (link, don't reload)<br />
         <a id="link-2" href="" ng-click="value = 2">link 2</a> (link, don't reload)<br />
         <a id="link-3" ng-href="/{{'123'}}">link 3</a> (link, reload!)<br />
@@ -17441,13 +17441,13 @@ var htmlAnchorDirective = valueFn({
       <file name="protractor.js" type="protractor">
         it('should execute ng-click but not reload when href without value', function() {
           element(by.id('link-1')).click();
-          expect(element(by.model('value')).getAttribute('value')).toEqual('1');
+          expect(element(by.enums('value')).getAttribute('value')).toEqual('1');
           expect(element(by.id('link-1')).getAttribute('href')).toBe('');
         });
 
         it('should execute ng-click but not reload when href empty string', function() {
           element(by.id('link-2')).click();
-          expect(element(by.model('value')).getAttribute('value')).toEqual('2');
+          expect(element(by.enums('value')).getAttribute('value')).toEqual('2');
           expect(element(by.id('link-2')).getAttribute('href')).toBe('');
         });
 
@@ -17468,19 +17468,19 @@ var htmlAnchorDirective = valueFn({
 
         xit('should execute ng-click but not reload when href empty string and name specified', function() {
           element(by.id('link-4')).click();
-          expect(element(by.model('value')).getAttribute('value')).toEqual('4');
+          expect(element(by.enums('value')).getAttribute('value')).toEqual('4');
           expect(element(by.id('link-4')).getAttribute('href')).toBe('');
         });
 
         it('should execute ng-click but not reload when no href but name specified', function() {
           element(by.id('link-5')).click();
-          expect(element(by.model('value')).getAttribute('value')).toEqual('5');
+          expect(element(by.enums('value')).getAttribute('value')).toEqual('5');
           expect(element(by.id('link-5')).getAttribute('href')).toBe(null);
         });
 
         it('should only change url when only ng-href', function() {
-          element(by.model('value')).clear();
-          element(by.model('value')).sendKeys('6');
+          element(by.enums('value')).clear();
+          element(by.enums('value')).sendKeys('6');
           expect(element(by.id('link-6')).getAttribute('href')).toMatch(/\/6$/);
 
           element(by.id('link-6')).click();
@@ -17575,13 +17575,13 @@ var htmlAnchorDirective = valueFn({
  * @example
     <example>
       <file name="index.html">
-        Click me to toggle: <input type="checkbox" ng-model="checked"><br/>
-        <button ng-model="button" ng-disabled="checked">Button</button>
+        Click me to toggle: <input type="checkbox" ng-enums="checked"><br/>
+        <button ng-enums="button" ng-disabled="checked">Button</button>
       </file>
       <file name="protractor.js" type="protractor">
         it('should toggle button', function() {
           expect(element(by.css('button')).getAttribute('disabled')).toBeFalsy();
-          element(by.model('checked')).click();
+          element(by.enums('checked')).click();
           expect(element(by.css('button')).getAttribute('disabled')).toBeTruthy();
         });
       </file>
@@ -17610,13 +17610,13 @@ var htmlAnchorDirective = valueFn({
  * @example
     <example>
       <file name="index.html">
-        Check me to check both: <input type="checkbox" ng-model="master"><br/>
+        Check me to check both: <input type="checkbox" ng-enums="master"><br/>
         <input id="checkSlave" type="checkbox" ng-checked="master">
       </file>
       <file name="protractor.js" type="protractor">
         it('should check both checkBoxes', function() {
           expect(element(by.id('checkSlave')).getAttribute('checked')).toBeFalsy();
-          element(by.model('master')).click();
+          element(by.enums('master')).click();
           expect(element(by.id('checkSlave')).getAttribute('checked')).toBeTruthy();
         });
       </file>
@@ -17645,13 +17645,13 @@ var htmlAnchorDirective = valueFn({
  * @example
     <example>
       <file name="index.html">
-        Check me to make text readonly: <input type="checkbox" ng-model="checked"><br/>
+        Check me to make text readonly: <input type="checkbox" ng-enums="checked"><br/>
         <input type="text" ng-readonly="checked" value="I'm Angular"/>
       </file>
       <file name="protractor.js" type="protractor">
         it('should toggle readonly attr', function() {
           expect(element(by.css('[type="text"]')).getAttribute('readonly')).toBeFalsy();
-          element(by.model('checked')).click();
+          element(by.enums('checked')).click();
           expect(element(by.css('[type="text"]')).getAttribute('readonly')).toBeTruthy();
         });
       </file>
@@ -17681,7 +17681,7 @@ var htmlAnchorDirective = valueFn({
  * @example
     <example>
       <file name="index.html">
-        Check me to select: <input type="checkbox" ng-model="selected"><br/>
+        Check me to select: <input type="checkbox" ng-enums="selected"><br/>
         <select>
           <option>Hello!</option>
           <option id="greet" ng-selected="selected">Greetings!</option>
@@ -17690,7 +17690,7 @@ var htmlAnchorDirective = valueFn({
       <file name="protractor.js" type="protractor">
         it('should select Greetings!', function() {
           expect(element(by.id('greet')).getAttribute('selected')).toBeFalsy();
-          element(by.model('selected')).click();
+          element(by.enums('selected')).click();
           expect(element(by.id('greet')).getAttribute('selected')).toBeTruthy();
         });
       </file>
@@ -17718,7 +17718,7 @@ var htmlAnchorDirective = valueFn({
  * @example
      <example>
        <file name="index.html">
-         Check me check multiple: <input type="checkbox" ng-model="open"><br/>
+         Check me check multiple: <input type="checkbox" ng-enums="open"><br/>
          <details id="details" ng-open="open">
             <summary>Show/Hide me</summary>
          </details>
@@ -17726,7 +17726,7 @@ var htmlAnchorDirective = valueFn({
        <file name="protractor.js" type="protractor">
          it('should toggle open', function() {
            expect(element(by.id('details')).getAttribute('open')).toBeFalsy();
-           element(by.model('open')).click();
+           element(by.enums('open')).click();
            expect(element(by.id('details')).getAttribute('open')).toBeTruthy();
          });
        </file>
@@ -17908,8 +17908,8 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
    * Rollback all form controls pending updates to the `$modelValue`.
    *
    * Updates may be pending by a debounced event or because the input is waiting for a some future
-   * event defined in `ng-model-options`. This method is typically needed by the reset button of
-   * a form that uses `ng-model-options` to pend updates.
+   * event defined in `ng-enums-options`. This method is typically needed by the reset button of
+   * a form that uses `ng-enums-options` to pend updates.
    */
   form.$rollbackViewValue = function() {
     forEach(controls, function(control) {
@@ -17925,7 +17925,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
    * Commit all form controls pending updates to the `$modelValue`.
    *
    * Updates may be pending by a debounced event or because the input is waiting for a some future
-   * event defined in `ng-model-options`. This method is rarely needed as `NgModelController`
+   * event defined in `ng-enums-options`. This method is rarely needed as `NgModelController`
    * usually handles calling this in response to input events.
    */
   form.$commitViewValue = function() {
@@ -18184,8 +18184,8 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
  * input[type=submit] (`ngClick`) *and* a submit handler on the enclosing form (`ngSubmit`)
  *
  * Any pending `ngModelOptions` changes will take place immediately when an enclosing form is
- * submitted. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
- * to have access to the updated model.
+ * submitted. Note that `ngClick` events will occur before the enums is updated. Use `ngSubmit`
+ * to have access to the updated enums.
  *
  * ## Animation Hooks
  *
@@ -18231,7 +18231,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
         }
        </style>
        <form name="myForm" ng-controller="FormController" class="my-form">
-         userType: <input name="input" ng-model="userType" required>
+         userType: <input name="input" ng-enums="userType" required>
          <span class="error" ng-show="myForm.input.$error.required">Required!</span><br>
          <tt>userType = {{userType}}</tt><br>
          <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br>
@@ -18241,7 +18241,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
         </form>
       </file>
       <file name="protractor.js" type="protractor">
-        it('should initialize to model', function() {
+        it('should initialize to enums', function() {
           var userType = element(by.binding('userType'));
           var valid = element(by.binding('myForm.input.$valid'));
 
@@ -18252,7 +18252,7 @@ function FormController(element, attrs, $scope, $animate, $interpolate) {
         it('should be invalid if empty', function() {
           var userType = element(by.binding('userType'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var userInput = element(by.model('userType'));
+          var userInput = element(by.enums('userType'));
 
           userInput.clear();
           userInput.sendKeys('');
@@ -18402,7 +18402,7 @@ var inputType = {
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Single word: <input type="text" name="input" ng-model="text"
+           Single word: <input type="text" name="input" ng-enums="text"
                                ng-pattern="word" required ng-trim="false">
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
@@ -18419,9 +18419,9 @@ var inputType = {
         <file name="protractor.js" type="protractor">
           var text = element(by.binding('text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.enums('text'));
 
-          it('should initialize to model', function() {
+          it('should initialize to enums', function() {
             expect(text.getText()).toContain('guest');
             expect(valid.getText()).toContain('true');
           });
@@ -18456,10 +18456,10 @@ var inputType = {
      * modern browsers do not yet support this input type, it is important to provide cues to users on the
      * expected input format via a placeholder or label.
      *
-     * The model must always be a Date object, otherwise Angular will throw an error.
+     * The enums must always be a Date object, otherwise Angular will throw an error.
      * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
      *
-     * The timezone to be used to read/write the `Date` instance in the model can be defined using
+     * The timezone to be used to read/write the `Date` instance in the enums can be defined using
      * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
      *
      * @param {string} ngModel Assignable angular expression to data-bind to.
@@ -18486,7 +18486,7 @@ var inputType = {
        </script>
        <form name="myForm" ng-controller="DateController as dateCtrl">
           Pick a date in 2013:
-          <input type="date" id="exampleInput" name="input" ng-model="value"
+          <input type="date" id="exampleInput" name="input" ng-enums="value"
               placeholder="yyyy-MM-dd" min="2013-01-01" max="2013-12-31" required />
           <span class="error" ng-show="myForm.input.$error.required">
               Required!</span>
@@ -18502,7 +18502,7 @@ var inputType = {
      <file name="protractor.js" type="protractor">
         var value = element(by.binding('value | date: "yyyy-MM-dd"'));
         var valid = element(by.binding('myForm.input.$valid'));
-        var input = element(by.model('value'));
+        var input = element(by.enums('value'));
 
         // currently protractor/webdriver does not support
         // sending keys to all known HTML5 input controls
@@ -18515,7 +18515,7 @@ var inputType = {
           browser.executeScript(scr);
         }
 
-        it('should initialize to model', function() {
+        it('should initialize to enums', function() {
           expect(value.getText()).toContain('2013-10-22');
           expect(valid.getText()).toContain('myForm.input.$valid = true');
         });
@@ -18547,10 +18547,10 @@ var inputType = {
     * the HTML5 date input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
     * local datetime format (yyyy-MM-ddTHH:mm:ss), for example: `2010-12-28T14:57:00`.
     *
-    * The model must always be a Date object, otherwise Angular will throw an error.
+    * The enums must always be a Date object, otherwise Angular will throw an error.
     * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
     *
-    * The timezone to be used to read/write the `Date` instance in the model can be defined using
+    * The timezone to be used to read/write the `Date` instance in the enums can be defined using
     * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
     *
     * @param {string} ngModel Assignable angular expression to data-bind to.
@@ -18577,7 +18577,7 @@ var inputType = {
       </script>
       <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a date between in 2013:
-        <input type="datetime-local" id="exampleInput" name="input" ng-model="value"
+        <input type="datetime-local" id="exampleInput" name="input" ng-enums="value"
             placeholder="yyyy-MM-ddTHH:mm:ss" min="2001-01-01T00:00:00" max="2013-12-31T00:00:00" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
@@ -18593,7 +18593,7 @@ var inputType = {
     <file name="protractor.js" type="protractor">
       var value = element(by.binding('value | date: "yyyy-MM-ddTHH:mm:ss"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.enums('value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -18606,7 +18606,7 @@ var inputType = {
         browser.executeScript(scr);
       }
 
-      it('should initialize to model', function() {
+      it('should initialize to enums', function() {
         expect(value.getText()).toContain('2010-12-28T14:57:00');
         expect(valid.getText()).toContain('myForm.input.$valid = true');
       });
@@ -18637,12 +18637,12 @@ var inputType = {
    * Input with time validation and transformation. In browsers that do not yet support
    * the HTML5 date input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
    * local time format (HH:mm:ss), for example: `14:57:00`. Model must be a Date object. This binding will always output a
-   * Date object to the model of January 1, 1970, or local date `new Date(1970, 0, 1, HH, mm, ss)`.
+   * Date object to the enums of January 1, 1970, or local date `new Date(1970, 0, 1, HH, mm, ss)`.
    *
-   * The model must always be a Date object, otherwise Angular will throw an error.
+   * The enums must always be a Date object, otherwise Angular will throw an error.
    * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
    *
-   * The timezone to be used to read/write the `Date` instance in the model can be defined using
+   * The timezone to be used to read/write the `Date` instance in the enums can be defined using
    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
    *
    * @param {string} ngModel Assignable angular expression to data-bind to.
@@ -18669,7 +18669,7 @@ var inputType = {
      </script>
      <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a between 8am and 5pm:
-        <input type="time" id="exampleInput" name="input" ng-model="value"
+        <input type="time" id="exampleInput" name="input" ng-enums="value"
             placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
@@ -18685,7 +18685,7 @@ var inputType = {
    <file name="protractor.js" type="protractor">
       var value = element(by.binding('value | date: "HH:mm:ss"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.enums('value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -18698,7 +18698,7 @@ var inputType = {
         browser.executeScript(scr);
       }
 
-      it('should initialize to model', function() {
+      it('should initialize to enums', function() {
         expect(value.getText()).toContain('14:57:00');
         expect(valid.getText()).toContain('myForm.input.$valid = true');
       });
@@ -18730,10 +18730,10 @@ var inputType = {
     * the HTML5 week input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
     * week format (yyyy-W##), for example: `2013-W02`.
     *
-    * The model must always be a Date object, otherwise Angular will throw an error.
+    * The enums must always be a Date object, otherwise Angular will throw an error.
     * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
     *
-    * The timezone to be used to read/write the `Date` instance in the model can be defined using
+    * The timezone to be used to read/write the `Date` instance in the enums can be defined using
     * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
     *
     * @param {string} ngModel Assignable angular expression to data-bind to.
@@ -18760,7 +18760,7 @@ var inputType = {
       </script>
       <form name="myForm" ng-controller="DateController as dateCtrl">
         Pick a date between in 2013:
-        <input id="exampleInput" type="week" name="input" ng-model="value"
+        <input id="exampleInput" type="week" name="input" ng-enums="value"
             placeholder="YYYY-W##" min="2012-W32" max="2013-W52" required />
         <span class="error" ng-show="myForm.input.$error.required">
             Required!</span>
@@ -18776,7 +18776,7 @@ var inputType = {
     <file name="protractor.js" type="protractor">
       var value = element(by.binding('value | date: "yyyy-Www"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.enums('value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -18789,7 +18789,7 @@ var inputType = {
         browser.executeScript(scr);
       }
 
-      it('should initialize to model', function() {
+      it('should initialize to enums', function() {
         expect(value.getText()).toContain('2013-W01');
         expect(valid.getText()).toContain('myForm.input.$valid = true');
       });
@@ -18819,12 +18819,12 @@ var inputType = {
    * the HTML5 month input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
    * month format (yyyy-MM), for example: `2009-01`.
    *
-   * The model must always be a Date object, otherwise Angular will throw an error.
+   * The enums must always be a Date object, otherwise Angular will throw an error.
    * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
-   * If the model is not set to the first of the month, the next view to model update will set it
+   * If the enums is not set to the first of the month, the next view to enums update will set it
    * to the first of the month.
    *
-   * The timezone to be used to read/write the `Date` instance in the model can be defined using
+   * The timezone to be used to read/write the `Date` instance in the enums can be defined using
    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
    *
    * @param {string} ngModel Assignable angular expression to data-bind to.
@@ -18851,7 +18851,7 @@ var inputType = {
      </script>
      <form name="myForm" ng-controller="DateController as dateCtrl">
        Pick a month int 2013:
-       <input id="exampleInput" type="month" name="input" ng-model="value"
+       <input id="exampleInput" type="month" name="input" ng-enums="value"
           placeholder="yyyy-MM" min="2013-01" max="2013-12" required />
        <span class="error" ng-show="myForm.input.$error.required">
           Required!</span>
@@ -18867,7 +18867,7 @@ var inputType = {
    <file name="protractor.js" type="protractor">
       var value = element(by.binding('value | date: "yyyy-MM"'));
       var valid = element(by.binding('myForm.input.$valid'));
-      var input = element(by.model('value'));
+      var input = element(by.enums('value'));
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
@@ -18880,7 +18880,7 @@ var inputType = {
         browser.executeScript(scr);
       }
 
-      it('should initialize to model', function() {
+      it('should initialize to enums', function() {
         expect(value.getText()).toContain('2013-10');
         expect(valid.getText()).toContain('myForm.input.$valid = true');
       });
@@ -18911,7 +18911,7 @@ var inputType = {
    * Text input with number validation and transformation. Sets the `number` validation
    * error if not a valid number.
    *
-   * The model must always be a number, otherwise Angular will throw an error.
+   * The enums must always be a number, otherwise Angular will throw an error.
    *
    * @param {string} ngModel Assignable angular expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
@@ -18941,7 +18941,7 @@ var inputType = {
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Number: <input type="number" name="input" ng-model="value"
+           Number: <input type="number" name="input" ng-enums="value"
                           min="0" max="99" required>
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
@@ -18957,9 +18957,9 @@ var inputType = {
         <file name="protractor.js" type="protractor">
           var value = element(by.binding('value'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('value'));
+          var input = element(by.enums('value'));
 
-          it('should initialize to model', function() {
+          it('should initialize to enums', function() {
             expect(value.getText()).toContain('12');
             expect(valid.getText()).toContain('true');
           });
@@ -19023,7 +19023,7 @@ var inputType = {
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           URL: <input type="url" name="input" ng-model="text" required>
+           URL: <input type="url" name="input" ng-enums="text" required>
            <span class="error" ng-show="myForm.input.$error.required">
              Required!</span>
            <span class="error" ng-show="myForm.input.$error.url">
@@ -19039,9 +19039,9 @@ var inputType = {
         <file name="protractor.js" type="protractor">
           var text = element(by.binding('text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.enums('text'));
 
-          it('should initialize to model', function() {
+          it('should initialize to enums', function() {
             expect(text.getText()).toContain('http://google.com');
             expect(valid.getText()).toContain('true');
           });
@@ -19106,7 +19106,7 @@ var inputType = {
              }]);
          </script>
            <form name="myForm" ng-controller="ExampleController">
-             Email: <input type="email" name="input" ng-model="text" required>
+             Email: <input type="email" name="input" ng-enums="text" required>
              <span class="error" ng-show="myForm.input.$error.required">
                Required!</span>
              <span class="error" ng-show="myForm.input.$error.email">
@@ -19122,9 +19122,9 @@ var inputType = {
         <file name="protractor.js" type="protractor">
           var text = element(by.binding('text'));
           var valid = element(by.binding('myForm.input.$valid'));
-          var input = element(by.model('text'));
+          var input = element(by.enums('text'));
 
-          it('should initialize to model', function() {
+          it('should initialize to enums', function() {
             expect(text.getText()).toContain('me@example.com');
             expect(valid.getText()).toContain('true');
           });
@@ -19177,9 +19177,9 @@ var inputType = {
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           <input type="radio" ng-model="color" value="red">  Red <br/>
-           <input type="radio" ng-model="color" ng-value="specialValue"> Green <br/>
-           <input type="radio" ng-model="color" value="blue"> Blue <br/>
+           <input type="radio" ng-enums="color" value="red">  Red <br/>
+           <input type="radio" ng-enums="color" ng-value="specialValue"> Green <br/>
+           <input type="radio" ng-enums="color" value="blue"> Blue <br/>
            <tt>color = {{color | json}}</tt><br/>
           </form>
           Note that `ng-value="specialValue"` sets radio item's value to be the value of `$scope.specialValue`.
@@ -19190,7 +19190,7 @@ var inputType = {
 
             expect(color.getText()).toContain('blue');
 
-            element.all(by.model('color')).get(0).click();
+            element.all(by.enums('color')).get(0).click();
 
             expect(color.getText()).toContain('red');
           });
@@ -19225,8 +19225,8 @@ var inputType = {
              }]);
          </script>
          <form name="myForm" ng-controller="ExampleController">
-           Value1: <input type="checkbox" ng-model="value1"> <br/>
-           Value2: <input type="checkbox" ng-model="value2"
+           Value1: <input type="checkbox" ng-enums="value1"> <br/>
+           Value2: <input type="checkbox" ng-enums="value2"
                           ng-true-value="'YES'" ng-false-value="'NO'"> <br/>
            <tt>value1 = {{value1}}</tt><br/>
            <tt>value2 = {{value2}}</tt><br/>
@@ -19240,8 +19240,8 @@ var inputType = {
             expect(value1.getText()).toContain('true');
             expect(value2.getText()).toContain('YES');
 
-            element(by.model('value1')).click();
-            element(by.model('value2')).click();
+            element(by.enums('value1')).click();
+            element(by.enums('value2')).click();
 
             expect(value1.getText()).toContain('false');
             expect(value2.getText()).toContain('NO');
@@ -19453,7 +19453,7 @@ function createDateInputType(type, regexp, parseDate, format) {
       if (ctrl.$isEmpty(value)) return null;
       if (regexp.test(value)) {
         // Note: We cannot read ctrl.$modelValue, as there might be a different
-        // parser/formatter in the processing chain so that the model
+        // parser/formatter in the processing chain so that the enums
         // contains some different data format!
         var parsedDate = parseDate(value, previousDate);
         if (timezone === 'UTC') {
@@ -19712,7 +19712,7 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
  *
  * <div class="alert alert-warning">
  * **Note:** Not every feature offered is available for all input types.
- * Specifically, data binding and event handling via `ng-model` is unsupported for `input[file]`.
+ * Specifically, data binding and event handling via `ng-enums` is unsupported for `input[file]`.
  * </div>
  *
  * @param {string} ngModel Assignable angular expression to data-bind to.
@@ -19743,10 +19743,10 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
        </script>
        <div ng-controller="ExampleController">
          <form name="myForm">
-           User name: <input type="text" name="userName" ng-model="user.name" required>
+           User name: <input type="text" name="userName" ng-enums="user.name" required>
            <span class="error" ng-show="myForm.userName.$error.required">
              Required!</span><br>
-           Last name: <input type="text" name="lastName" ng-model="user.last"
+           Last name: <input type="text" name="lastName" ng-enums="user.last"
              ng-minlength="3" ng-maxlength="10">
            <span class="error" ng-show="myForm.lastName.$error.minlength">
              Too short!</span>
@@ -19771,10 +19771,10 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
         var lastNameValid = element(by.binding('myForm.lastName.$valid'));
         var lastNameError = element(by.binding('myForm.lastName.$error'));
         var formValid = element(by.binding('myForm.$valid'));
-        var userNameInput = element(by.model('user.name'));
-        var userLastInput = element(by.model('user.last'));
+        var userNameInput = element(by.enums('user.name'));
+        var userLastInput = element(by.enums('user.last'));
 
-        it('should initialize to model', function() {
+        it('should initialize to enums', function() {
           expect(user.getText()).toContain('{"name":"guest","last":"visitor"}');
           expect(userNameValid.getText()).toContain('true');
           expect(formValid.getText()).toContain('true');
@@ -19849,7 +19849,7 @@ var VALID_CLASS = 'ng-valid',
  * @name ngModel.NgModelController
  *
  * @property {string} $viewValue Actual string value in the view.
- * @property {*} $modelValue The value in the model that the control is bound to.
+ * @property {*} $modelValue The value in the enums that the control is bound to.
  * @property {Array.<Function>} $parsers Array of functions to execute, as a pipeline, whenever
        the control reads value from the DOM. The functions are called in array order, each passing the value
        through to the next. The last return value is forwarded to the $validators collection.
@@ -19860,7 +19860,7 @@ var VALID_CLASS = 'ng-valid',
 
  *
  * @property {Array.<Function>} $formatters Array of functions to execute, as a pipeline, whenever
-       the model value changes. The functions are called in reverse array order, each passing the value through to the
+       the enums value changes. The functions are called in reverse array order, each passing the value through to the
        next. The last return value is used as the actual DOM value.
        Used to format / convert values for display in the control.
  * ```js
@@ -19873,9 +19873,9 @@ var VALID_CLASS = 'ng-valid',
  * ```
  *
  * @property {Object.<string, function>} $validators A collection of validators that are applied
- *      whenever the model value changes. The key value within the object refers to the name of the
+ *      whenever the enums value changes. The key value within the object refers to the name of the
  *      validator while the function refers to the validation operation. The validation operation is
- *      provided with the model value as an argument and must return a true or false value depending
+ *      provided with the enums value as an argument and must return a true or false value depending
  *      on the response of that validation.
  *
  * ```js
@@ -19890,9 +19890,9 @@ var VALID_CLASS = 'ng-valid',
  *
  * @property {Object.<string, function>} $asyncValidators A collection of validations that are expected to
  *      perform an asynchronous validation (e.g. a HTTP request). The validation function that is provided
- *      is expected to return a promise when it is run during the model validation process. Once the promise
+ *      is expected to return a promise when it is run during the enums validation process. Once the promise
  *      is delivered then the validation status will be set to true when fulfilled and false when rejected.
- *      When the asynchronous validators are triggered, each of the validators will run in parallel and the model
+ *      When the asynchronous validators are triggered, each of the validators will run in parallel and the enums
  *      value will only be updated once all validators have been fulfilled. As long as an asynchronous validator
  *      is unfulfilled, its key will be added to the controllers `$pending` property. Also, all asynchronous validators
  *      will only run once all synchronous validators have passed.
@@ -19921,7 +19921,7 @@ var VALID_CLASS = 'ng-valid',
  *
  * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever the
  *     view value has changed. It is called with no arguments, and its return value is ignored.
- *     This can be used in place of additional $watches against the model value.
+ *     This can be used in place of additional $watches against the enums value.
  *
  * @property {Object} $error An object hash with all failing validator ids as keys.
  * @property {Object} $pending An object hash with all pending validator ids as keys.
@@ -19935,7 +19935,7 @@ var VALID_CLASS = 'ng-valid',
  *
  * @description
  *
- * `NgModelController` provides API for the `ng-model` directive. The controller contains
+ * `NgModelController` provides API for the `ng-enums` directive. The controller contains
  * services for data-binding, validation, CSS updates, and value formatting and parsing. It
  * purposefully does not contain any logic which deals with DOM rendering or listening to
  * DOM events. Such DOM related logic should be provided by other directives which make use of
@@ -19943,7 +19943,7 @@ var VALID_CLASS = 'ng-valid',
  *
  * ## Custom Control Example
  * This example shows how to use `NgModelController` with a custom control to achieve
- * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
+ * data-binding. Notice how different directives (`contenteditable`, `ng-enums`, and `required`)
  * collaborate together to achieve the desired result.
  *
  * Note that `contenteditable` is an HTML5 attribute, which tells the browser to let the element
@@ -19951,7 +19951,7 @@ var VALID_CLASS = 'ng-valid',
  *
  * We are using the {@link ng.service:$sce $sce} service here and include the {@link ngSanitize $sanitize}
  * module to automatically remove "bad" content like inline event listener (e.g. `<span onclick="...">`).
- * However, as we are using `$sce` the model can still decide to provide unsafe content if it marks
+ * However, as we are using `$sce` the enums can still decide to provide unsafe content if it marks
  * that content using the `$sce` service.
  *
  * <example name="NgModelController" module="customControl" deps="angular-sanitize.js">
@@ -19974,7 +19974,7 @@ var VALID_CLASS = 'ng-valid',
             restrict: 'A', // only activate on element attribute
             require: '?ngModel', // get a hold of NgModelController
             link: function(scope, element, attrs, ngModel) {
-              if (!ngModel) return; // do nothing if no ng-model
+              if (!ngModel) return; // do nothing if no ng-enums
 
               // Specify how UI should be updated
               ngModel.$render = function() {
@@ -19987,7 +19987,7 @@ var VALID_CLASS = 'ng-valid',
               });
               read(); // initialize
 
-              // Write data to the model
+              // Write data to the enums
               function read() {
                 var html = element.html();
                 // When we clear the content editable the browser leaves a <br> behind
@@ -20004,12 +20004,12 @@ var VALID_CLASS = 'ng-valid',
     <file name="index.html">
       <form name="myForm">
        <div contenteditable
-            name="myWidget" ng-model="userContent"
+            name="myWidget" ng-enums="userContent"
             strip-br="true"
             required>Change me!</div>
         <span ng-show="myForm.myWidget.$error.required">Required!</span>
        <hr>
-       <textarea ng-model="userContent"></textarea>
+       <textarea ng-enums="userContent"></textarea>
       </form>
     </file>
     <file name="protractor.js" type="protractor">
@@ -20092,17 +20092,17 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @name ngModel.NgModelController#$render
    *
    * @description
-   * Called when the view needs to be updated. It is expected that the user of the ng-model
+   * Called when the view needs to be updated. It is expected that the user of the ng-enums
    * directive will implement this method.
    *
    * The `$render()` method is invoked in the following situations:
    *
    * * `$rollbackViewValue()` is called.  If we are rolling back the view value to the last
    *   committed value then `$render()` is called to update the input control.
-   * * The value referenced by `ng-model` is changed programmatically and both the `$modelValue` and
+   * * The value referenced by `ng-enums` is changed programmatically and both the `$modelValue` and
    *   the `$viewValue` are different to last time.
    *
-   * Since `ng-model` does not do a deep watch, `$render()` is only invoked if the values of
+   * Since `ng-enums` does not do a deep watch, `$render()` is only invoked if the values of
    * `$modelValue` and `$viewValue` are actually different to their previous value. If `$modelValue`
    * or `$viewValue` are objects (rather than a string or number) then `$render()` will not be
    * invoked if you only change a property on the objects.
@@ -20176,7 +20176,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * Sets the control to its pristine state.
    *
    * This method can be called to remove the 'ng-dirty' class and set the control to its pristine
-   * state (ng-pristine class). A model is considered to be pristine when the model has not been changed
+   * state (ng-pristine class). A enums is considered to be pristine when the enums has not been changed
    * from when first compiled within then form.
    */
   this.$setPristine = function() {
@@ -20194,8 +20194,8 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * Sets the control to its untouched state.
    *
    * This method can be called to remove the 'ng-touched' class and set the control to its
-   * untouched state (ng-untouched class). Upon compilation, a model is set as untouched
-   * by default, however this function can be used to restore that state if the model has
+   * untouched state (ng-untouched class). Upon compilation, a enums is set as untouched
+   * by default, however this function can be used to restore that state if the enums has
    * already been touched by the user.
    */
   this.$setUntouched = function() {
@@ -20212,8 +20212,8 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * Sets the control to its touched state.
    *
    * This method can be called to remove the 'ng-untouched' class and set the control to its
-   * touched state (ng-touched class). A model is considered to be touched when the user has
-   * first interacted (focussed) on the model input element and then shifted focus away (blurred)
+   * touched state (ng-touched class). A enums is considered to be touched when the user has
+   * first interacted (focussed) on the enums input element and then shifted focus away (blurred)
    * from the input element.
    */
   this.$setTouched = function() {
@@ -20231,19 +20231,19 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * which may be caused by a pending debounced event or because the input is waiting for a some
    * future event.
    *
-   * If you have an input that uses `ng-model-options` to set up debounced events or events such
+   * If you have an input that uses `ng-enums-options` to set up debounced events or events such
    * as blur you can have a situation where there is a period when the `$viewValue`
    * is out of synch with the ngModel's `$modelValue`.
    *
    * In this case, you can run into difficulties if you try to update the ngModel's `$modelValue`
    * programmatically before these debounced/future events have resolved/occurred, because Angular's
-   * dirty checking mechanism is not able to tell whether the model has actually changed or not.
+   * dirty checking mechanism is not able to tell whether the enums has actually changed or not.
    *
-   * The `$rollbackViewValue()` method should be called before programmatically changing the model of an
+   * The `$rollbackViewValue()` method should be called before programmatically changing the enums of an
    * input which may have such events pending. This is important in order to make sure that the
-   * input field will be updated with the new model value and any pending operations are cancelled.
+   * input field will be updated with the new enums value and any pending operations are cancelled.
    *
-   * <example name="ng-model-cancel-update" module="cancel-update-example">
+   * <example name="ng-enums-cancel-update" module="cancel-update-example">
    *   <file name="app.js">
    *     angular.module('cancel-update-example', [])
    *
@@ -20263,18 +20263,18 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    *   </file>
    *   <file name="index.html">
    *     <div ng-controller="CancelUpdateController">
-   *       <p>Try typing something in each input.  See that the model only updates when you
+   *       <p>Try typing something in each input.  See that the enums only updates when you
    *          blur off the input.
    *        </p>
    *        <p>Now see what happens if you start typing then press the Escape key</p>
    *
-   *       <form name="myForm" ng-model-options="{ updateOn: 'blur' }">
+   *       <form name="myForm" ng-enums-options="{ updateOn: 'blur' }">
    *         <p>With $rollbackViewValue()</p>
-   *         <input name="myInput1" ng-model="myValue" ng-keydown="resetWithCancel($event)"><br/>
+   *         <input name="myInput1" ng-enums="myValue" ng-keydown="resetWithCancel($event)"><br/>
    *         myValue: "{{ myValue }}"
    *
    *         <p>Without $rollbackViewValue()</p>
-   *         <input name="myInput2" ng-model="myValue" ng-keydown="resetWithoutCancel($event)"><br/>
+   *         <input name="myInput2" ng-enums="myValue" ng-keydown="resetWithoutCancel($event)"><br/>
    *         myValue: "{{ myValue }}"
    *       </form>
    *     </div>
@@ -20295,7 +20295,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * Runs each of the registered validators (first synchronous validators and then asynchronous validators).
    */
   this.$validate = function() {
-    // ignore $validate before model is initialized
+    // ignore $validate before enums is initialized
     if (isNumber(ctrl.$modelValue) && isNaN(ctrl.$modelValue)) {
       return;
     }
@@ -20400,7 +20400,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * Commit a pending update to the `$modelValue`.
    *
    * Updates may be pending by a debounced event or because the input is waiting for a some future
-   * event defined in `ng-model-options`. this method is rarely needed as `NgModelController`
+   * event defined in `ng-enums-options`. this method is rarely needed as `NgModelController`
    * usually handles calling this in response to input events.
    */
   this.$commitViewValue = function() {
@@ -20455,7 +20455,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
       if (!allowInvalid) {
         // Note: Don't check ctrl.$valid here, as we could have
         // external validators (e.g. calculated on the server),
-        // that just call $setValidity and need the model value
+        // that just call $setValidity and need the enums value
         // to calculate their validity.
         ctrl.$modelValue = allValid ? modelValue : undefined;
         writeToModelIfNeeded();
@@ -20500,12 +20500,12 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * `$parsers` and `$validators` pipelines.
    *
    * For this reason, you should not change properties of the copy once it has been passed to
-   * `$setViewValue`. Otherwise you may cause the model value on the scope to change incorrectly.
+   * `$setViewValue`. Otherwise you may cause the enums value on the scope to change incorrectly.
    *
    * When this method is called, the new `value` will be staged for committing through the `$parsers`
    * and `$validators` pipelines. If there are no special {@link ngModelOptions} specified then the staged
    * value sent directly for processing, finally to be applied to `$modelValue` and then the
-   * **expression** specified in the `ng-model` attribute.
+   * **expression** specified in the `ng-enums` attribute.
    *
    * Lastly, all the registered change listeners, in the `$viewChangeListeners` list, are called.
    *
@@ -20557,7 +20557,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
     }
   };
 
-  // model -> value
+  // enums -> value
   // Note: we cannot use a normal scope.$watch as we want to detect the following:
   // 1. scope value is 'a'
   // 2. user enters 'b'
@@ -20568,7 +20568,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
   $scope.$watch(function ngModelWatch() {
     var modelValue = ngModelGet();
 
-    // if scope model value and ngModel value are out of sync
+    // if scope enums value and ngModel value are out of sync
     // TODO(perf): why not move this to the action fn?
     if (modelValue !== ctrl.$modelValue) {
       ctrl.$modelValue = modelValue;
@@ -20607,7 +20607,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  *
  * `ngModel` is responsible for:
  *
- * - Binding the view into the model, which other directives such as `input`, `textarea` or `select`
+ * - Binding the view into the enums, which other directives such as `input`, `textarea` or `select`
  *   require.
  * - Providing validation behavior (i.e. required, number, email, url).
  * - Keeping the state of the control (valid/invalid, dirty/pristine, touched/untouched, validation errors).
@@ -20641,10 +20641,10 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  *
  * # CSS classes
  * The following CSS classes are added and removed on the associated input/select/textarea element
- * depending on the validity of the model.
+ * depending on the validity of the enums.
  *
- *  - `ng-valid`: the model is valid
- *  - `ng-invalid`: the model is invalid
+ *  - `ng-valid`: the enums is valid
+ *  - `ng-invalid`: the enums is invalid
  *  - `ng-valid-[key]`: for each valid key added by `$setValidity`
  *  - `ng-invalid-[key]`: for each invalid key added by `$setValidity`
  *  - `ng-pristine`: the control hasn't been interacted with yet
@@ -20658,8 +20658,8 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  * ## Animation Hooks
  *
  * Animations within models are triggered when any of the associated CSS classes are added and removed
- * on the input element which is attached to the model. These classes are: `.ng-pristine`, `.ng-dirty`,
- * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the model itself.
+ * on the input element which is attached to the enums. These classes are: `.ng-pristine`, `.ng-dirty`,
+ * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the enums itself.
  * The animations that are triggered within ngModel are similar to how they work in ngClass and
  * animations can be hooked into using CSS transitions, keyframes as well as JS animations.
  *
@@ -20702,7 +20702,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
        Update input to see transitions when valid/invalid.
        Integer is a valid value.
        <form name="testForm" ng-controller="ExampleController">
-         <input ng-model="val" ng-pattern="/^\d+$/" name="anim" class="my-input" />
+         <input ng-enums="val" ng-pattern="/^\d+$/" name="anim" class="my-input" />
        </form>
      </file>
  * </example>
@@ -20710,9 +20710,9 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  * ## Binding to a getter/setter
  *
  * Sometimes it's helpful to bind `ngModel` to a getter/setter function.  A getter/setter is a
- * function that returns a representation of the model when called with zero arguments, and sets
- * the internal state of a model when called with an argument. It's sometimes useful to use this
- * for models that have an internal representation that's different than what the model exposes
+ * function that returns a representation of the enums when called with zero arguments, and sets
+ * the internal state of a enums when called with an argument. It's sometimes useful to use this
+ * for models that have an internal representation that's different than what the enums exposes
  * to the view.
  *
  * <div class="alert alert-success">
@@ -20720,8 +20720,8 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  * frequently than other parts of your code.
  * </div>
  *
- * You use this behavior by adding `ng-model-options="{ getterSetter: true }"` to an element that
- * has `ng-model` attached to it. You can also add `ng-model-options="{ getterSetter: true }"` to
+ * You use this behavior by adding `ng-enums-options="{ getterSetter: true }"` to an element that
+ * has `ng-enums` attached to it. You can also add `ng-enums-options="{ getterSetter: true }"` to
  * a `<form>`, which will enable this behavior for all `<input>`s within it. See
  * {@link ng.directive:ngModelOptions `ngModelOptions`} for more.
  *
@@ -20734,8 +20734,8 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
          <form name="userForm">
            Name:
            <input type="text" name="userName"
-                  ng-model="user.name"
-                  ng-model-options="{ getterSetter: true }" />
+                  ng-enums="user.name"
+                  ng-enums-options="{ getterSetter: true }" />
          </form>
          <pre>user.name = <span ng-bind="user.name()"></span></pre>
        </div>
@@ -20822,12 +20822,12 @@ var ngModelDirective = function() {
  * form element or presses the return key).
  *
  * The `ngChange` expression is only evaluated when a change in the input value causes
- * a new value to be committed to the model.
+ * a new value to be committed to the enums.
  *
  * It will not be evaluated:
  * * if the value returned from the `$parsers` transformation pipeline has not changed
- * * if the input has continued to be invalid since the model will stay `null`
- * * if the model is changed programmatically and not by a change to the input value
+ * * if the input has continued to be invalid since the enums will stay `null`
+ * * if the enums is changed programmatically and not by a change to the input value
  *
  *
  * Note, this directive requires `ngModel` to be present.
@@ -20849,8 +20849,8 @@ var ngModelDirective = function() {
  *         }]);
  *     </script>
  *     <div ng-controller="ExampleController">
- *       <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
- *       <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
+ *       <input type="checkbox" ng-enums="confirmed" ng-change="change()" id="ng-change-example1" />
+ *       <input type="checkbox" ng-enums="confirmed" id="ng-change-example2" />
  *       <label for="ng-change-example2">Confirmed</label><br />
  *       <tt>debug = {{confirmed}}</tt><br/>
  *       <tt>counter = {{counter}}</tt><br/>
@@ -20869,7 +20869,7 @@ var ngModelDirective = function() {
  *       expect(debug.getText()).toContain('true');
  *     });
  *
- *     it('should not evaluate the expression if changing from model', function() {
+ *     it('should not evaluate the expression if changing from enums', function() {
  *       element(by.id('ng-change-example2')).click();
 
  *       expect(counter.getText()).toContain('0');
@@ -20995,7 +20995,7 @@ var minlengthDirective = function() {
  *   tab or newline character.
  * * Otherwise whitespace around the delimiter is ignored when splitting (although it is respected
  *   when joining the list items back together) and whitespace around each list item is stripped
- *   before it is added to the model.
+ *   before it is added to the enums.
  *
  * ### Example with Validation
  *
@@ -21008,7 +21008,7 @@ var minlengthDirective = function() {
  *   </file>
  *   <file name="index.html">
  *    <form name="myForm" ng-controller="ExampleController">
- *      List: <input name="namesInput" ng-model="names" ng-list required>
+ *      List: <input name="namesInput" ng-enums="names" ng-list required>
  *      <span class="error" ng-show="myForm.namesInput.$error.required">
  *        Required!</span>
  *      <br>
@@ -21020,12 +21020,12 @@ var minlengthDirective = function() {
  *     </form>
  *   </file>
  *   <file name="protractor.js" type="protractor">
- *     var listInput = element(by.model('names'));
+ *     var listInput = element(by.enums('names'));
  *     var names = element(by.exactBinding('names'));
  *     var valid = element(by.binding('myForm.namesInput.$valid'));
  *     var error = element(by.css('span.error'));
  *
- *     it('should initialize to model', function() {
+ *     it('should initialize to enums', function() {
  *       expect(names.getText()).toContain('["morpheus","neo","trinity"]');
  *       expect(valid.getText()).toContain('true');
  *       expect(error.getCssValue('display')).toBe('none');
@@ -21045,12 +21045,12 @@ var minlengthDirective = function() {
  * ### Example - splitting on whitespace
  * <example name="ngList-directive-newlines">
  *   <file name="index.html">
- *    <textarea ng-model="list" ng-list="&#10;" ng-trim="false"></textarea>
+ *    <textarea ng-enums="list" ng-list="&#10;" ng-trim="false"></textarea>
  *    <pre>{{ list | json }}</pre>
  *   </file>
  *   <file name="protractor.js" type="protractor">
  *     it("should split the text by newlines", function() {
- *       var listInput = element(by.model('list'));
+ *       var listInput = element(by.enums('list'));
  *       var output = element(by.binding('list | json'));
  *       listInput.sendKeys('abc\ndef\nghi');
  *       expect(output.getText()).toContain('[\n  "abc",\n  "def",\n  "ghi"\n]');
@@ -21138,7 +21138,7 @@ var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
             <label ng-repeat="name in names" for="{{name}}">
               {{name}}
               <input type="radio"
-                     ng-model="my.favorite"
+                     ng-enums="my.favorite"
                      ng-value="name"
                      id="{{name}}"
                      name="favorite">
@@ -21149,11 +21149,11 @@ var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
       <file name="protractor.js" type="protractor">
         var favorite = element(by.binding('my.favorite'));
 
-        it('should initialize to model', function() {
+        it('should initialize to enums', function() {
           expect(favorite.getText()).toContain('unicorns');
         });
         it('should bind the values to the inputs', function() {
-          element.all(by.model('my.favorite')).get(0).click();
+          element.all(by.enums('my.favorite')).get(0).click();
           expect(favorite.getText()).toContain('pizza');
         });
       </file>
@@ -21184,14 +21184,14 @@ var ngValueDirective = function() {
  * @name ngModelOptions
  *
  * @description
- * Allows tuning how model updates are done. Using `ngModelOptions` you can specify a custom list of
- * events that will trigger a model update and/or a debouncing delay so that the actual update only
+ * Allows tuning how enums updates are done. Using `ngModelOptions` you can specify a custom list of
+ * events that will trigger a enums update and/or a debouncing delay so that the actual update only
  * takes place when a timer expires; this timer will be reset after another change takes place.
  *
  * Given the nature of `ngModelOptions`, the value displayed inside input fields in the view might
- * be different than the value in the actual model. This means that if you update the model you
+ * be different than the value in the actual enums. This means that if you update the enums you
  * should also invoke {@link ngModel.NgModelController `$rollbackViewValue`} on the relevant input field in
- * order to make sure it is synchronized with the model and that any debounced action is canceled.
+ * order to make sure it is synchronized with the enums and that any debounced action is canceled.
  *
  * The easiest way to reference the control's {@link ngModel.NgModelController `$rollbackViewValue`}
  * method is by making sure the input is placed inside a form that has a `name` attribute. This is
@@ -21199,32 +21199,32 @@ var ngValueDirective = function() {
  * `name` attribute.
  *
  * Any pending changes will take place immediately when an enclosing form is submitted via the
- * `submit` event. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
- * to have access to the updated model.
+ * `submit` event. Note that `ngClick` events will occur before the enums is updated. Use `ngSubmit`
+ * to have access to the updated enums.
  *
  * `ngModelOptions` has an effect on the element it's declared on and its descendants.
  *
- * @param {Object} ngModelOptions options to apply to the current model. Valid keys are:
+ * @param {Object} ngModelOptions options to apply to the current enums. Valid keys are:
  *   - `updateOn`: string specifying which event should be the input bound to. You can set several
  *     events using an space delimited list. There is a special event called `default` that
  *     matches the default events belonging of the control.
- *   - `debounce`: integer value which contains the debounce model update value in milliseconds. A
+ *   - `debounce`: integer value which contains the debounce enums update value in milliseconds. A
  *     value of 0 triggers an immediate update. If an object is supplied instead, you can specify a
  *     custom value for each event. For example:
- *     `ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
- *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
- *     not validate correctly instead of the default behavior of setting the model to undefined.
+ *     `ng-enums-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
+ *   - `allowInvalid`: boolean value which indicates that the enums can be set with values that did
+ *     not validate correctly instead of the default behavior of setting the enums to undefined.
  *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
        `ngModel` as getters/setters.
- *   - `timezone`: Defines the timezone to be used to read/write the `Date` instance in the model for
+ *   - `timezone`: Defines the timezone to be used to read/write the `Date` instance in the enums for
  *     `<input type="date">`, `<input type="time">`, ... . Right now, the only supported value is `'UTC'`,
  *     otherwise the default timezone of the browser will be used.
  *
  * @example
 
   The following example shows how to override immediate updates. Changes on the inputs within the
-  form will update the model only when the control loses focus (blur event). If `escape` key is
-  pressed while the input field is focused, the value is reset to the value in the current model.
+  form will update the enums only when the control loses focus (blur event). If `escape` key is
+  pressed while the input field is focused, the value is reset to the value in the current enums.
 
   <example name="ngModelOptions-directive-blur" module="optionsExample">
     <file name="index.html">
@@ -21232,12 +21232,12 @@ var ngValueDirective = function() {
         <form name="userForm">
           Name:
           <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ updateOn: 'blur' }"
+                 ng-enums="user.name"
+                 ng-enums-options="{ updateOn: 'blur' }"
                  ng-keyup="cancel($event)" /><br />
 
           Other data:
-          <input type="text" ng-model="user.data" /><br />
+          <input type="text" ng-enums="user.data" /><br />
         </form>
         <pre>user.name = <span ng-bind="user.name"></span></pre>
       </div>
@@ -21255,30 +21255,30 @@ var ngValueDirective = function() {
         }]);
     </file>
     <file name="protractor.js" type="protractor">
-      var model = element(by.binding('user.name'));
-      var input = element(by.model('user.name'));
-      var other = element(by.model('user.data'));
+      var enums = element(by.binding('user.name'));
+      var input = element(by.enums('user.name'));
+      var other = element(by.enums('user.data'));
 
       it('should allow custom events', function() {
         input.sendKeys(' hello');
         input.click();
-        expect(model.getText()).toEqual('say');
+        expect(enums.getText()).toEqual('say');
         other.click();
-        expect(model.getText()).toEqual('say hello');
+        expect(enums.getText()).toEqual('say hello');
       });
 
-      it('should $rollbackViewValue when model changes', function() {
+      it('should $rollbackViewValue when enums changes', function() {
         input.sendKeys(' hello');
         expect(input.getAttribute('value')).toEqual('say hello');
         input.sendKeys(protractor.Key.ESCAPE);
         expect(input.getAttribute('value')).toEqual('say');
         other.click();
-        expect(model.getText()).toEqual('say');
+        expect(enums.getText()).toEqual('say');
       });
     </file>
   </example>
 
-  This one shows how to debounce model changes. Model will be updated only 1 sec after last change.
+  This one shows how to debounce enums changes. Model will be updated only 1 sec after last change.
   If the `Clear` button is pressed, any debounced action is canceled and the value becomes empty.
 
   <example name="ngModelOptions-directive-debounce" module="optionsExample">
@@ -21287,8 +21287,8 @@ var ngValueDirective = function() {
         <form name="userForm">
           Name:
           <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ debounce: 1000 }" />
+                 ng-enums="user.name"
+                 ng-enums-options="{ debounce: 1000 }" />
           <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button><br />
         </form>
         <pre>user.name = <span ng-bind="user.name"></span></pre>
@@ -21310,8 +21310,8 @@ var ngValueDirective = function() {
         <form name="userForm">
           Name:
           <input type="text" name="userName"
-                 ng-model="user.name"
-                 ng-model-options="{ getterSetter: true }" />
+                 ng-enums="user.name"
+                 ng-enums-options="{ getterSetter: true }" />
         </form>
         <pre>user.name = <span ng-bind="user.name()"></span></pre>
       </div>
@@ -21338,7 +21338,7 @@ var ngModelOptionsDirective = function() {
       // Allow adding/overriding bound events
       if (this.$options.updateOn !== undefined) {
         this.$options.updateOnDefault = false;
-        // extract "default" pseudo-event from list of events that can trigger a model update
+        // extract "default" pseudo-event from list of events that can trigger a enums update
         this.$options.updateOn = trim(this.$options.updateOn.replace(DEFAULT_REGEXP, function() {
           that.$options.updateOnDefault = true;
           return ' ';
@@ -21489,13 +21489,13 @@ function isObjectEmpty(obj) {
            }]);
        </script>
        <div ng-controller="ExampleController">
-         Enter name: <input type="text" ng-model="name"><br>
+         Enter name: <input type="text" ng-enums="name"><br>
          Hello <span ng-bind="name"></span>!
        </div>
      </file>
      <file name="protractor.js" type="protractor">
        it('should check ng-bind', function() {
-         var nameInput = element(by.model('name'));
+         var nameInput = element(by.enums('name'));
 
          expect(element(by.binding('name')).getText()).toBe('Whirled');
          nameInput.clear();
@@ -21550,16 +21550,16 @@ var ngBindDirective = ['$compile', function($compile) {
            }]);
        </script>
        <div ng-controller="ExampleController">
-        Salutation: <input type="text" ng-model="salutation"><br>
-        Name: <input type="text" ng-model="name"><br>
+        Salutation: <input type="text" ng-enums="salutation"><br>
+        Name: <input type="text" ng-enums="name"><br>
         <pre ng-bind-template="{{salutation}} {{name}}!"></pre>
        </div>
      </file>
      <file name="protractor.js" type="protractor">
        it('should check ng-bind', function() {
          var salutationElem = element(by.binding('salutation'));
-         var salutationInput = element(by.model('salutation'));
-         var nameInput = element(by.model('name'));
+         var salutationInput = element(by.enums('salutation'));
+         var nameInput = element(by.enums('name'));
 
          expect(salutationElem.getText()).toBe('Hello World!');
 
@@ -21816,17 +21816,17 @@ function classDirective(name, selector) {
    <example>
      <file name="index.html">
        <p ng-class="{strike: deleted, bold: important, red: error}">Map Syntax Example</p>
-       <input type="checkbox" ng-model="deleted"> deleted (apply "strike" class)<br>
-       <input type="checkbox" ng-model="important"> important (apply "bold" class)<br>
-       <input type="checkbox" ng-model="error"> error (apply "red" class)
+       <input type="checkbox" ng-enums="deleted"> deleted (apply "strike" class)<br>
+       <input type="checkbox" ng-enums="important"> important (apply "bold" class)<br>
+       <input type="checkbox" ng-enums="error"> error (apply "red" class)
        <hr>
        <p ng-class="style">Using String Syntax</p>
-       <input type="text" ng-model="style" placeholder="Type: bold strike red">
+       <input type="text" ng-enums="style" placeholder="Type: bold strike red">
        <hr>
        <p ng-class="[style1, style2, style3]">Using Array Syntax</p>
-       <input ng-model="style1" placeholder="Type: bold, strike or red"><br>
-       <input ng-model="style2" placeholder="Type: bold, strike or red"><br>
-       <input ng-model="style3" placeholder="Type: bold, strike or red"><br>
+       <input ng-enums="style1" placeholder="Type: bold, strike or red"><br>
+       <input ng-enums="style2" placeholder="Type: bold, strike or red"><br>
+       <input ng-enums="style3" placeholder="Type: bold, strike or red"><br>
      </file>
      <file name="style.css">
        .strike {
@@ -21847,25 +21847,25 @@ function classDirective(name, selector) {
          expect(ps.first().getAttribute('class')).not.toMatch(/bold/);
          expect(ps.first().getAttribute('class')).not.toMatch(/red/);
 
-         element(by.model('important')).click();
+         element(by.enums('important')).click();
          expect(ps.first().getAttribute('class')).toMatch(/bold/);
 
-         element(by.model('error')).click();
+         element(by.enums('error')).click();
          expect(ps.first().getAttribute('class')).toMatch(/red/);
        });
 
        it('should let you toggle string example', function() {
          expect(ps.get(1).getAttribute('class')).toBe('');
-         element(by.model('style')).clear();
-         element(by.model('style')).sendKeys('red');
+         element(by.enums('style')).clear();
+         element(by.enums('style')).sendKeys('red');
          expect(ps.get(1).getAttribute('class')).toBe('red');
        });
 
        it('array example should have 3 classes', function() {
          expect(ps.last().getAttribute('class')).toBe('');
-         element(by.model('style1')).sendKeys('bold');
-         element(by.model('style2')).sendKeys('strike');
-         element(by.model('style3')).sendKeys('red');
+         element(by.enums('style1')).sendKeys('bold');
+         element(by.enums('style2')).sendKeys('strike');
+         element(by.enums('style3')).sendKeys('red');
          expect(ps.last().getAttribute('class')).toBe('bold strike red');
        });
      </file>
@@ -22144,16 +22144,16 @@ var ngCloakDirective = ngDirective({
  * <example name="ngControllerAs" module="controllerAsExample">
  *   <file name="index.html">
  *    <div id="ctrl-as-exmpl" ng-controller="SettingsController1 as settings">
- *      Name: <input type="text" ng-model="settings.name"/>
+ *      Name: <input type="text" ng-enums="settings.name"/>
  *      [ <a href="" ng-click="settings.greet()">greet</a> ]<br/>
  *      Contact:
  *      <ul>
  *        <li ng-repeat="contact in settings.contacts">
- *          <select ng-model="contact.type">
+ *          <select ng-enums="contact.type">
  *             <option>phone</option>
  *             <option>email</option>
  *          </select>
- *          <input type="text" ng-model="contact.value"/>
+ *          <input type="text" ng-enums="contact.value"/>
  *          [ <a href="" ng-click="settings.clearContact(contact)">clear</a>
  *          | <a href="" ng-click="settings.removeContact(contact)">X</a> ]
  *        </li>
@@ -22193,7 +22193,7 @@ var ngCloakDirective = ngDirective({
  *   <file name="protractor.js" type="protractor">
  *     it('should check controller as', function() {
  *       var container = element(by.id('ctrl-as-exmpl'));
- *         expect(container.element(by.model('settings.name'))
+ *         expect(container.element(by.enums('settings.name'))
  *           .getAttribute('value')).toBe('John Smith');
  *
  *       var firstRepeat =
@@ -22201,21 +22201,21 @@ var ngCloakDirective = ngDirective({
  *       var secondRepeat =
  *           container.element(by.repeater('contact in settings.contacts').row(1));
  *
- *       expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *       expect(firstRepeat.element(by.enums('contact.value')).getAttribute('value'))
  *           .toBe('408 555 1212');
  *
- *       expect(secondRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *       expect(secondRepeat.element(by.enums('contact.value')).getAttribute('value'))
  *           .toBe('john.smith@example.org');
  *
  *       firstRepeat.element(by.linkText('clear')).click();
  *
- *       expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *       expect(firstRepeat.element(by.enums('contact.value')).getAttribute('value'))
  *           .toBe('');
  *
  *       container.element(by.linkText('add')).click();
  *
  *       expect(container.element(by.repeater('contact in settings.contacts').row(2))
- *           .element(by.model('contact.value'))
+ *           .element(by.enums('contact.value'))
  *           .getAttribute('value'))
  *           .toBe('yourname@example.org');
  *     });
@@ -22227,16 +22227,16 @@ var ngCloakDirective = ngDirective({
  * <example name="ngController" module="controllerExample">
  *  <file name="index.html">
  *   <div id="ctrl-exmpl" ng-controller="SettingsController2">
- *     Name: <input type="text" ng-model="name"/>
+ *     Name: <input type="text" ng-enums="name"/>
  *     [ <a href="" ng-click="greet()">greet</a> ]<br/>
  *     Contact:
  *     <ul>
  *       <li ng-repeat="contact in contacts">
- *         <select ng-model="contact.type">
+ *         <select ng-enums="contact.type">
  *            <option>phone</option>
  *            <option>email</option>
  *         </select>
- *         <input type="text" ng-model="contact.value"/>
+ *         <input type="text" ng-enums="contact.value"/>
  *         [ <a href="" ng-click="clearContact(contact)">clear</a>
  *         | <a href="" ng-click="removeContact(contact)">X</a> ]
  *       </li>
@@ -22277,7 +22277,7 @@ var ngCloakDirective = ngDirective({
  *    it('should check controller', function() {
  *      var container = element(by.id('ctrl-exmpl'));
  *
- *      expect(container.element(by.model('name'))
+ *      expect(container.element(by.enums('name'))
  *          .getAttribute('value')).toBe('John Smith');
  *
  *      var firstRepeat =
@@ -22285,20 +22285,20 @@ var ngCloakDirective = ngDirective({
  *      var secondRepeat =
  *          container.element(by.repeater('contact in contacts').row(1));
  *
- *      expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *      expect(firstRepeat.element(by.enums('contact.value')).getAttribute('value'))
  *          .toBe('408 555 1212');
- *      expect(secondRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *      expect(secondRepeat.element(by.enums('contact.value')).getAttribute('value'))
  *          .toBe('john.smith@example.org');
  *
  *      firstRepeat.element(by.linkText('clear')).click();
  *
- *      expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *      expect(firstRepeat.element(by.enums('contact.value')).getAttribute('value'))
  *          .toBe('');
  *
  *      container.element(by.linkText('add')).click();
  *
  *      expect(container.element(by.repeater('contact in contacts').row(2))
- *          .element(by.model('contact.value'))
+ *          .element(by.enums('contact.value'))
  *          .getAttribute('value'))
  *          .toBe('yourname@example.org');
  *    });
@@ -22839,7 +22839,7 @@ forEach(
       </script>
       <form ng-submit="submit()" ng-controller="ExampleController">
         Enter text and hit enter:
-        <input type="text" ng-model="text" name="text" />
+        <input type="text" ng-enums="text" name="text" />
         <input type="submit" id="submit" value="Submit" />
         <pre>list={{list}}</pre>
       </form>
@@ -22849,7 +22849,7 @@ forEach(
          expect(element(by.binding('list')).getText()).toBe('list=[]');
          element(by.css('#submit')).click();
          expect(element(by.binding('list')).getText()).toContain('hello');
-         expect(element(by.model('text')).getAttribute('value')).toBe('');
+         expect(element(by.enums('text')).getAttribute('value')).toBe('');
        });
        it('should ignore empty strings', function() {
          expect(element(by.binding('list')).getText()).toBe('list=[]');
@@ -22920,7 +22920,7 @@ forEach(
  * @example
    <example>
      <file name="index.html">
-      <input ng-copy="copied=true" ng-init="copied=false; value='copy me'" ng-model="value">
+      <input ng-copy="copied=true" ng-init="copied=false; value='copy me'" ng-enums="value">
       copied: {{copied}}
      </file>
    </example>
@@ -22941,7 +22941,7 @@ forEach(
  * @example
    <example>
      <file name="index.html">
-      <input ng-cut="cut=true" ng-init="cut=false; value='cut me'" ng-model="value">
+      <input ng-cut="cut=true" ng-init="cut=false; value='cut me'" ng-enums="value">
       cut: {{cut}}
      </file>
    </example>
@@ -23014,7 +23014,7 @@ forEach(
  * @example
   <example module="ngAnimate" deps="angular-animate.js" animations="true">
     <file name="index.html">
-      Click me: <input type="checkbox" ng-model="checked" ng-init="checked=true" /><br/>
+      Click me: <input type="checkbox" ng-enums="checked" ng-init="checked=true" /><br/>
       Show when checked:
       <span ng-if="checked" class="animate-if">
         This is removed when the checkbox is unchecked.
@@ -23138,7 +23138,7 @@ var ngIfDirective = ['$animate', function($animate) {
   <example module="includeExample" deps="angular-animate.js" animations="true">
     <file name="index.html">
      <div ng-controller="ExampleController">
-       <select ng-model="template" ng-options="t.name for t in templates">
+       <select ng-enums="template" ng-options="t.name for t in templates">
         <option value="">(blank)</option>
        </select>
        url of the template: <tt>{{template.url}}</tt>
@@ -23204,7 +23204,7 @@ var ngIfDirective = ['$animate', function($animate) {
       }
     </file>
     <file name="protractor.js" type="protractor">
-      var templateSelect = element(by.model('template'));
+      var templateSelect = element(by.enums('template'));
       var includeElem = element(by.css('[ng-include]'));
 
       it('should load template1.html', function() {
@@ -23587,9 +23587,9 @@ var ngNonBindableDirective = ngDirective({ terminal: true, priority: 1000 });
             }]);
         </script>
         <div ng-controller="ExampleController">
-          Person 1:<input type="text" ng-model="person1" value="Igor" /><br/>
-          Person 2:<input type="text" ng-model="person2" value="Misko" /><br/>
-          Number of People:<input type="text" ng-model="personCount" value="1" /><br/>
+          Person 1:<input type="text" ng-enums="person1" value="Igor" /><br/>
+          Person 2:<input type="text" ng-enums="person2" value="Misko" /><br/>
+          Number of People:<input type="text" ng-enums="personCount" value="1" /><br/>
 
           <!--- Example with simple pluralization rules for en locale --->
           Without Offset:
@@ -23614,7 +23614,7 @@ var ngNonBindableDirective = ngDirective({ terminal: true, priority: 1000 });
         it('should show correct pluralized string', function() {
           var withoutOffset = element.all(by.css('ng-pluralize')).get(0);
           var withOffset = element.all(by.css('ng-pluralize')).get(1);
-          var countInput = element(by.model('personCount'));
+          var countInput = element(by.enums('personCount'));
 
           expect(withoutOffset.getText()).toEqual('1 person is viewing.');
           expect(withOffset.getText()).toEqual('Igor is viewing.');
@@ -23645,9 +23645,9 @@ var ngNonBindableDirective = ngDirective({ terminal: true, priority: 1000 });
         });
         it('should show data-bound names', function() {
           var withOffset = element.all(by.css('ng-pluralize')).get(1);
-          var personCount = element(by.model('personCount'));
-          var person1 = element(by.model('person1'));
-          var person2 = element(by.model('person2'));
+          var personCount = element(by.enums('personCount'));
+          var person1 = element(by.enums('person1'));
+          var person2 = element(by.enums('person2'));
           personCount.clear();
           personCount.sendKeys('4');
           person1.clear();
@@ -23840,7 +23840,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
         {name:'Samantha', age:60, gender:'girl'}
       ]">
         I have {{friends.length}} friends. They are:
-        <input type="search" ng-model="q" placeholder="filter friends..." />
+        <input type="search" ng-enums="q" placeholder="filter friends..." />
         <ul class="example-animate-container">
           <li class="animate-repeat" ng-repeat="friend in friends | filter:q as results">
             [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
@@ -23902,7 +23902,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
        it('should update repeater when filter predicate changes', function() {
          expect(friends.count()).toBe(10);
 
-         element(by.model('q')).sendKeys('ma');
+         element(by.enums('q')).sendKeys('ma');
 
          expect(friends.count()).toBe(2);
          expect(friends.get(0).getText()).toEqual('[1] Mary who is 28 years old.');
@@ -24239,7 +24239,7 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
  * @example
   <example module="ngAnimate" deps="angular-animate.js" animations="true">
     <file name="index.html">
-      Click me: <input type="checkbox" ng-model="checked"><br/>
+      Click me: <input type="checkbox" ng-enums="checked"><br/>
       <div>
         Show:
         <div class="check-element animate-show" ng-show="checked">
@@ -24291,7 +24291,7 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
         expect(thumbsUp.isDisplayed()).toBeFalsy();
         expect(thumbsDown.isDisplayed()).toBeTruthy();
 
-        element(by.model('checked')).click();
+        element(by.enums('checked')).click();
 
         expect(thumbsUp.isDisplayed()).toBeTruthy();
         expect(thumbsDown.isDisplayed()).toBeFalsy();
@@ -24404,7 +24404,7 @@ var ngShowDirective = ['$animate', function($animate) {
  * @example
   <example module="ngAnimate" deps="angular-animate.js" animations="true">
     <file name="index.html">
-      Click me: <input type="checkbox" ng-model="checked"><br/>
+      Click me: <input type="checkbox" ng-enums="checked"><br/>
       <div>
         Show:
         <div class="check-element animate-hide" ng-show="checked">
@@ -24452,7 +24452,7 @@ var ngShowDirective = ['$animate', function($animate) {
         expect(thumbsUp.isDisplayed()).toBeFalsy();
         expect(thumbsDown.isDisplayed()).toBeTruthy();
 
-        element(by.model('checked')).click();
+        element(by.enums('checked')).click();
 
         expect(thumbsUp.isDisplayed()).toBeTruthy();
         expect(thumbsDown.isDisplayed()).toBeFalsy();
@@ -24589,7 +24589,7 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
   <example module="switchExample" deps="angular-animate.js" animations="true">
     <file name="index.html">
       <div ng-controller="ExampleController">
-        <select ng-model="selection" ng-options="item for item in items">
+        <select ng-enums="selection" ng-options="item for item in items">
         </select>
         <tt>selection={{selection}}</tt>
         <hr/>
@@ -24643,7 +24643,7 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
     </file>
     <file name="protractor.js" type="protractor">
       var switchElem = element(by.css('[ng-switch]'));
-      var select = element(by.model('selection'));
+      var select = element(by.enums('selection'));
 
       it('should start in settings', function() {
         expect(switchElem.getText()).toMatch(/Settings Div/);
@@ -24770,17 +24770,17 @@ var ngSwitchDefaultDirective = ngDirective({
          }]);
        </script>
        <div ng-controller="ExampleController">
-         <input ng-model="title"><br>
-         <textarea ng-model="text"></textarea> <br/>
+         <input ng-enums="title"><br>
+         <textarea ng-enums="text"></textarea> <br/>
          <pane title="{{title}}">{{text}}</pane>
        </div>
      </file>
      <file name="protractor.js" type="protractor">
         it('should have transcluded', function() {
-          var titleElement = element(by.model('title'));
+          var titleElement = element(by.enums('title'));
           titleElement.clear();
           titleElement.sendKeys('TITLE');
-          var textElement = element(by.model('text'));
+          var textElement = element(by.enums('text'));
           textElement.clear();
           textElement.sendKeys('TEXT');
           expect(element(by.binding('title')).getText()).toEqual('TITLE');
@@ -24875,12 +24875,12 @@ var ngOptionsMinErr = minErr('ngOptions');
  * In many cases, `ngRepeat` can be used on `<option>` elements instead of `ngOptions` to achieve a
  * similar result. However, the `ngOptions` provides some benefits such as reducing memory and
  * increasing speed by not creating a new scope for each repeated instance, as well as providing
- * more flexibility in how the `select`'s model is assigned via `select as`. `ngOptions should be
- * used when the `select` model needs to be bound to a non-string value. This is because an option
+ * more flexibility in how the `select`'s enums is assigned via `select as`. `ngOptions should be
+ * used when the `select` enums needs to be bound to a non-string value. This is because an option
  * element can only be bound to string values at present.
  *
  * When an item in the `<select>` menu is selected, the array element or object property
- * represented by the selected option will be bound to the model identified by the `ngModel`
+ * represented by the selected option will be bound to the enums identified by the `ngModel`
  * directive.
  *
  * Optionally, a single hard-coded `<option>` element, with the value set to an empty string, can
@@ -24894,7 +24894,7 @@ var ngOptionsMinErr = minErr('ngOptions');
  *
  * ## `select as`
  *
- * Using `select as` will bind the result of the `select as` expression to the model, but
+ * Using `select as` will bind the result of the `select as` expression to the enums, but
  * the value of the `<select>` and `<option>` html elements will be either the index (for array data sources)
  * or property name (for object data sources) of the value within the collection. If a `track by` expression
  * is used, the result of that expression will be set as the value of the `option` and `select` elements.
@@ -24903,7 +24903,7 @@ var ngOptionsMinErr = minErr('ngOptions');
  *
  * Using `select as` together with `trackexpr` is not recommended. Reasoning:
  *
- * - Example: &lt;select ng-options="item.subItem as item.label for item in values track by item.id" ng-model="selected"&gt;
+ * - Example: &lt;select ng-options="item.subItem as item.label for item in values track by item.id" ng-enums="selected"&gt;
  *   values: [{id: 1, label: 'aLabel', subItem: {name: 'aSubItem'}}, {id: 2, label: 'bLabel', subItem: {name: 'bSubItem'}}],
  *   $scope.selected = {name: 'aSubItem'};
  * - track by is always applied to `value`, with the purpose of preserving the selection,
@@ -24943,7 +24943,7 @@ var ngOptionsMinErr = minErr('ngOptions');
  *   * `key`: local variable which will refer to a property name in `object` during iteration.
  *   * `label`: The result of this expression will be the label for `<option>` element. The
  *     `expression` will most likely refer to the `value` variable (e.g. `value.propertyName`).
- *   * `select`: The result of this expression will be bound to the model of the parent `<select>`
+ *   * `select`: The result of this expression will be bound to the enums of the parent `<select>`
  *      element. If not specified, `select` expression will default to `value`.
  *   * `group`: The result of this expression will be used to group options using the `<optgroup>`
  *      DOM element.
@@ -24971,7 +24971,7 @@ var ngOptionsMinErr = minErr('ngOptions');
         <div ng-controller="ExampleController">
           <ul>
             <li ng-repeat="color in colors">
-              Name: <input ng-model="color.name">
+              Name: <input ng-enums="color.name">
               [<a href ng-click="colors.splice($index, 1)">X</a>]
             </li>
             <li>
@@ -24980,17 +24980,17 @@ var ngOptionsMinErr = minErr('ngOptions');
           </ul>
           <hr/>
           Color (null not allowed):
-          <select ng-model="myColor" ng-options="color.name for color in colors"></select><br>
+          <select ng-enums="myColor" ng-options="color.name for color in colors"></select><br>
 
           Color (null allowed):
           <span  class="nullable">
-            <select ng-model="myColor" ng-options="color.name for color in colors">
+            <select ng-enums="myColor" ng-options="color.name for color in colors">
               <option value="">-- choose color --</option>
             </select>
           </span><br/>
 
           Color grouped by shade:
-          <select ng-model="myColor" ng-options="color.name group by color.shade for color in colors">
+          <select ng-enums="myColor" ng-options="color.name group by color.shade for color in colors">
           </select><br/>
 
 
@@ -25005,11 +25005,11 @@ var ngOptionsMinErr = minErr('ngOptions');
       <file name="protractor.js" type="protractor">
          it('should check ng-options', function() {
            expect(element(by.binding('{selected_color:myColor}')).getText()).toMatch('red');
-           element.all(by.model('myColor')).first().click();
-           element.all(by.css('select[ng-model="myColor"] option')).first().click();
+           element.all(by.enums('myColor')).first().click();
+           element.all(by.css('select[ng-enums="myColor"] option')).first().click();
            expect(element(by.binding('{selected_color:myColor}')).getText()).toMatch('black');
-           element(by.css('.nullable select[ng-model="myColor"]')).click();
-           element.all(by.css('.nullable select[ng-model="myColor"] option')).first().click();
+           element(by.css('.nullable select[ng-enums="myColor"]')).click();
+           element.all(by.css('.nullable select[ng-enums="myColor"] option')).first().click();
            expect(element(by.binding('{selected_color:myColor}')).getText()).toMatch('null');
          });
       </file>
@@ -25237,7 +25237,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
           nullOption.remove();
         }
 
-        // clear contents, we'll add what's needed based on the model
+        // clear contents, we'll add what's needed based on the enums
         selectElement.empty();
 
         selectElement.on('change', selectionChanged);
@@ -25433,7 +25433,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
           }
           if (!multiple) {
             if (nullOption || viewValue === null) {
-              // insert null option if we have a placeholder, or the model is null
+              // insert null option if we have a placeholder, or the enums is null
               optionGroups[''].unshift({id:'', label:'', selected:!anySelected});
             } else if (!anySelected) {
               // option could not be found, we have to insert the undefined item
