@@ -14,14 +14,14 @@ public enum KBParameterDesc {
     mass(jpl.Float.class, Double.TYPE),
 
     // indirect features
-    equipment(jpl.Compound.class, Equipment.class),
-    type(jpl.Compound.class, Type.class),
+    equipment(jpl.Atom.class, Equipment.class),
+    type(jpl.Atom.class, Type.class),
 
     //enum features
-    category(jpl.Compound.class, Category.class),
-    chassis(jpl.Compound.class, Chassis.class),
-    gearbox(jpl.Compound.class, Gearbox.class),
-    power(jpl.Compound.class, Power.class),
+    category(jpl.Atom.class, Category.class),
+    chassis(jpl.Atom.class, Chassis.class),
+    gearbox(jpl.Atom.class, Gearbox.class),
+    power(jpl.Atom.class, Power.class),
 
     //boolean features
     feature(jpl.Atom.class, Feature.class);
@@ -44,6 +44,10 @@ public enum KBParameterDesc {
             throw new IllegalStateException("Should not be called -- has no value");
         }
 
+        if (constructorType.isEnum()) {
+            Constructor constructor = jplType.getConstructor(String.class);
+            return (Term) constructor.newInstance(value.toString());
+        }
         Constructor constructor = jplType.getConstructor(constructorType);
         return (Term) constructor.newInstance(value);
     }

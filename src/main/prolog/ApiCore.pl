@@ -25,13 +25,16 @@
 	required_equipment/1.
 
 max_passengers(_):- \+ required_passengers(_), !.
-max_passengers(Actual):- required_passengers(Required), Actual @>= Required, inc_checked.
+max_passengers(Actual):- required_passengers(Required), Actual @>= Required, inc_checked, !.
+max_passengers(_):- required_passengers(_), clear_checked, false.
 
 max_cargo(_):- \+ required_cargo(_), !.
-max_cargo(Actual):- required_cargo(Required), Actual @>= Required, inc_checked.
+max_cargo(Actual):- required_cargo(Required), Actual @>= Required, inc_checked, !.
+max_cargo(_):- required_cargo(_), clear_checked, false.
 
 mass(_):- \+ required_mass(_), !.
-mass(Actual):- required_mass(Required), Actual @=< Required, inc_checked.
+mass(Actual):- required_mass(Required), Actual @=< Required, inc_checked, !.
+mass(_):- required_mass(_), clear_checked, false.
 
 power(Power):- \+ required_power(Power), !.
 power(Power):- required_power(Power), inc_checked.

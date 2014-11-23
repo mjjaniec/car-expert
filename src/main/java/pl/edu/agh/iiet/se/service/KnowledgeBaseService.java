@@ -9,19 +9,21 @@ import java.util.*;
 
 public class KnowledgeBaseService {
     private static final String CONSULT = "consult";
-    private static final String BEST_CAR = "best_car";
-    private static final String CLEANUP = "cleanup";
-    //private static final String kbLocation = "/home/mjjaniec/car-expert/src/main/prolog/KnowledgeBase.pl";
-    private static final String kbLocation = "/home/mjjaniec/car-expert/src/main/prolog/test.pl";
+    private static final String GET_CARS = "get_cars";
+    private static final String kbPath = "/home/mjjaniec/car-expert/src/main/prolog/";
+    private static final String[] kbFiles = new String[] {"ApiHeader.pl", "KnowledgeBase.pl", "ApiCore.pl"};
 
     {
         loadEngine();
     }
 
     private void loadEngine() {
-        Query loadQuery = new Query(CONSULT, new Term[]{new Atom(kbLocation)});
-        if (!loadQuery.hasSolution()) {
-            throw new RuntimeException("unable to load knowledge base");
+        for (String kbFile: kbFiles) {
+            String file = kbPath + kbFile;
+            Query loadQuery = new Query(CONSULT, new Term[]{new Atom(file)});
+            if (!loadQuery.hasSolution()) {
+                throw new RuntimeException("unable to load knowledge base: unable to load file \"" + file + "\"");
+            }
         }
     }
 
@@ -31,31 +33,23 @@ public class KnowledgeBaseService {
         for (KBParameter parameter : parameters) {
             KBParameterDesc parameterDesc = parameter.getDesc();
             if (parameterDesc.hasValue()) {
-                requestedCarFeatures.add(new Compound(parameterDesc.predicateName(), new Term[]{parameterDesc.createWithValue(parameter.getValue())}));
+                requestedCarFeatures.add(new Compound(parameterDesc.predicateName(),
+                        new Term[]{parameterDesc.createWithValue(parameter.getValue())}));
             } else {
                 requestedCarFeatures.add(new Atom(parameterDesc.predicateName()));
             }
         }
 
-        Query bestCar = new Query(BEST_CAR, new Term[]{
+        Query bestCar = new Query(GET_CARS, new Term[]{
                 Util.termArrayToList(requestedCarFeatures.toArray(new Term[requestedCarFeatures.size()])), car});
         Hashtable[] solutions = bestCar.allSolutions();
-        Set<String> result = new HashSet<>();
+        List<String> result = new ArrayList<>(solutions.length);
         for (Hashtable solution : solutions) {
             String matchingCar = solution.get(car.name()).toString();
             result.add(matchingCar);
         }
 
-        cleanKb();
-
-        return new ArrayList<>(result);
-    }
-
-    private void cleanKb() {
-        Query cleanup = new Query(new Atom(CLEANUP));
-        if (!cleanup.hasSolution()) {
-            throw new RuntimeException("unable to clean knowledge base");
-        }
+        return result;
     }
 
     public List<UIKBParameterDesc> parameters() {
