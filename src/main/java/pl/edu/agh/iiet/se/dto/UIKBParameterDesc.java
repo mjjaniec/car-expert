@@ -2,10 +2,9 @@ package pl.edu.agh.iiet.se.dto;
 
 import lombok.Data;
 import lombok.NonNull;
+import pl.edu.agh.iiet.se.enums.*;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Data
 public class UIKBParameterDesc {
@@ -17,19 +16,42 @@ public class UIKBParameterDesc {
     @NonNull
     private String name;
 
+    public UIKBParameterDesc(String element, String name) {
+        this(element, name, Collections.emptyList());
+    }
+
+    public UIKBParameterDesc(String element, String name, List<String> values) {
+        this.name = name;
+        this.element = element;
+        this.values = values;
+    }
+
+    public UIKBParameterDesc(Class<? extends Enum> enumType) {
+        this("select", enumType.getSimpleName().toLowerCase(), getNames(enumType.getEnumConstants()));
+    }
+
     public static List<UIKBParameterDesc> params() {
         List<UIKBParameterDesc> params = new LinkedList<>();
+        params.add(new UIKBParameterDesc(Type.class));
+        params.add(new UIKBParameterDesc(Equipment.class));
         params.add(intConstraints(new UIKBParameterDesc("input", "max_passengers")));
-        params.add(m3(floatConstraints(new UIKBParameterDesc("input", "max_capacity"))));
+        params.add(m3(floatConstraints(new UIKBParameterDesc("input", "max_cargo"))));
+        params.add(new UIKBParameterDesc(Category.class));
+        params.add(new UIKBParameterDesc(Feature.class));
+        params.add(new UIKBParameterDesc(Gearbox.class));
+        params.add(new UIKBParameterDesc(Power.class));
+        params.add(new UIKBParameterDesc(Chassis.class));
         params.add(ton(floatConstraints(new UIKBParameterDesc("input", "mass"))));
-        params.add(values(new UIKBParameterDesc("select", "category"), "a", "b", "c"));
-        params.add(values(new UIKBParameterDesc("select", "type"), "off_road", "personal", "sport", "transport_passengers", "transport_cargo"));
-        params.add(values(new UIKBParameterDesc("select", "chassis"), "low", "high"));
-        params.add(values(new UIKBParameterDesc("select", "gearbox"), "manual", "automatic"));
-        params.add(values(new UIKBParameterDesc("select", "power"), "low", "medium", "high"));
-        params.add(values(new UIKBParameterDesc("select", "feature")));
 
         return params;
+    }
+
+    private static List<String> getNames(Enum[] enumConstants) {
+        List<String> result = new ArrayList<>(enumConstants.length);
+        for (Enum value : enumConstants) {
+            result.add(value.name());
+        }
+        return result;
     }
 
     private static UIKBParameterDesc intConstraints(UIKBParameterDesc parameterDesc) {
@@ -49,11 +71,6 @@ public class UIKBParameterDesc {
 
     private static UIKBParameterDesc ton(UIKBParameterDesc desc) {
         desc.setUnit("T");
-        return desc;
-    }
-
-    private static UIKBParameterDesc values(UIKBParameterDesc desc, String... values) {
-        desc.setValues(Arrays.asList(values));
         return desc;
     }
 }

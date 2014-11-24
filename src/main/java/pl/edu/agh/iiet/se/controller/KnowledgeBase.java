@@ -2,6 +2,7 @@ package pl.edu.agh.iiet.se.controller;
 
 import pl.edu.agh.iiet.se.dto.KBAnswer;
 import pl.edu.agh.iiet.se.dto.KBParameter;
+import pl.edu.agh.iiet.se.service.KBServiceProvider;
 import pl.edu.agh.iiet.se.service.KnowledgeBaseService;
 
 import javax.servlet.ServletContext;
@@ -21,7 +22,7 @@ public class KnowledgeBase {
     @Context
     private ServletContext context;
 
-    private KnowledgeBaseService kbService = new KnowledgeBaseService();
+    private KnowledgeBaseService kbService = KBServiceProvider.getService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
