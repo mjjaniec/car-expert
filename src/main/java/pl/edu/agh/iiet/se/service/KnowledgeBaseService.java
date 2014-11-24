@@ -10,7 +10,7 @@ import java.util.*;
 public class KnowledgeBaseService {
     private static final String CONSULT = "consult";
     private static final String GET_CARS = "get_cars";
-    private static final String kbPath = "/home/mjjaniec/car-expert/src/main/prolog/";
+    private static final String kbPath = "src/main/prolog/";
     private static final String[] kbFiles = new String[] {"ApiHeader.pl", "KnowledgeBase.pl", "ApiCore.pl"};
 
     {

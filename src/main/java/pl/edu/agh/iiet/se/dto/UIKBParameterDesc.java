@@ -17,7 +17,7 @@ public class UIKBParameterDesc {
     private String name;
 
     public UIKBParameterDesc(String element, String name) {
-        this(element, name, Collections.emptyList());
+        this(element, name, Collections.<String>emptyList());
     }
 
     public UIKBParameterDesc(String element, String name, List<String> values) {

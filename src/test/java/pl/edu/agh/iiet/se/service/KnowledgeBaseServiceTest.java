@@ -24,7 +24,7 @@ public class KnowledgeBaseServiceTest {
 
     @Test
     public void shouldReturnAllCartsWhenNoParameters() {
-        List<String> result = new KnowledgeBaseService().matchingCars(Collections.emptyList());
+        List<String> result = new KnowledgeBaseService().matchingCars(Collections.<KBParameter>emptyList());
         assertThat(result, is(Car.toStringList(Car.values())));
     }
 
