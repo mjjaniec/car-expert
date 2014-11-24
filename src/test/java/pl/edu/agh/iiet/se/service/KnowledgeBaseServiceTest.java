@@ -56,7 +56,7 @@ public class KnowledgeBaseServiceTest {
                 is(Car.toStringList(Car.solaris_urbino, Car.volkswagen_lt46)));
 
         assertThat(kbs.matchingCars(Lists.newArrayList(mass)),
-                is(Car.toStringList(Car.bmw_3, Car.fiat_panda, Car.jeep_renegade, Car.mercedes_benz_sprinter,
+                is(Car.toStringList(Car.bmw_3, Car.fiat_panda, Car.jeep_renegade, Car.mercedes__benz_sprinter,
                         Car.renault_clio, Car.suzuki_jimny, Car.volkswagen_lt46)));
 
         assertThat(kbs.matchingCars(Lists.newArrayList(mass, passengers)),

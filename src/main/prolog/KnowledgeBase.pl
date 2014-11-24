@@ -51,12 +51,12 @@ car(jeep_renegade):- max_passengers(5), max_cargo(0.35), mass(2.4),
                      equipment(high), feature(leather_upholstery).
 
 
-car(mercedes_benz_atego):- max_passengers(2), max_cargo(30), mass(7),
+car(mercedes__benz_atego):- max_passengers(2), max_cargo(30), mass(7),
                            type(transport_cargo), gearbox(manual),
                            equipment(standard), feature(power_steering), power(medium).
 
 
-car(mercedes_benz_sprinter):- max_passengers(2), max_cargo(12), mass(3),
+car(mercedes__benz_sprinter):- max_passengers(2), max_cargo(12), mass(3),
                               type(transport_cargo), gearbox(manual),
                               equipment(high), feature(gps), power(medium).
 

@@ -1,30 +1,19 @@
 package pl.edu.agh.iiet.se.enums;
 
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public enum Car {
-    bmw_3("BMW", "3"),
-    fiat_panda("Fiat", "Panda"),
-    jeep_renegade("Jeep", "Renegade"),
-    mercedes_benz_atego("Mercedes-Benz", "Atego"),
-    mercedes_benz_sprinter("Mercedes-Benz", "Sprinter"),
-    renault_clio("Renault", "Clio"),
-    scania_v8("Scania", "V8"),
-    solaris_urbino("Solaris", "Urbino"),
-    suzuki_jimny("Suzuki", "Jimny"),
-    volkswagen_lt46("Volkswagen", "LT46");
-
-    private final String manufacturer;
-    private final String model;
-
-    private Car(String manufacturer, String model) {
-        this.manufacturer = manufacturer;
-        this.model = model;
-    }
+    bmw_3,
+    fiat_panda,
+    jeep_renegade,
+    mercedes__benz_atego,
+    mercedes__benz_sprinter,
+    renault_clio,
+    scania_v8,
+    solaris_urbino,
+    suzuki_jimny,
+    volkswagen_lt46;
 
     public static List<String> toStringList(Car... cars) {
         List<String> result = new ArrayList<>(cars.length);

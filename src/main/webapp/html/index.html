@@ -36,6 +36,20 @@
                 return $sce.trustAsHtml(value);
             };
 
+            $scope.filterOutUnusedFeatures = function(carDetails, selectedFeatures) {
+                var result = JSON.parse(JSON.stringify(carDetails));
+                var visibleFeatures = new Set();
+                for (var i in selectedFeatures) {
+                    visibleFeatures.add(selectedFeatures[i].name);
+                }
+                for (var prop in result) {
+                    if (! visibleFeatures.has(prop)) {
+                        delete result[prop];
+                    }
+                }
+                return result;
+            };
+
             $scope.query = function(carDetails) {
                 $scope.queried = true;
                 var items = [];
@@ -50,7 +64,7 @@
                 for(var prop in carDetails) {
                     if(selectsNames.indexOf(prop) != -1) {
                         angular.forEach(carDetails[prop], function(value, key) {
-                            items.push({"desc": value});
+                            items.push({"desc": prop, "value": value});
                         });
                     } else {
                         items.push({"desc": prop, "value": carDetails[prop]})
@@ -59,6 +73,9 @@
 
                 kbService.query(items).success(function(data, status) {
                     if(status === 200) {
+                        for (var i in data) {
+                            data[i].answer = data[i].answer.replace('__','-');
+                        }
                         $scope.answers = data;
                     } else {
                         $scope.answers = [];
@@ -213,7 +230,8 @@
         </div>
         <br/>
     </div>
-    <button class="btn btn-default btn-info" ng-click="query(carDetails)" ng-disabled="queryForm.$invalid">Query</button>
+    <button class="btn btn-default btn-info" ng-click="query(filterOutUnusedFeatures(carDetails, chosenParams))"
+            ng-disabled="queryForm.$invalid">Query</button>
 </form>
 </div>
 </div>
@@ -235,9 +253,17 @@
                     </div>
                 </slide>
             </carousel>
+            <table ng-table class="table">
+                <tr><th>Producer</th><th>Model</th></tr>
+                <tr ng-repeat="answer in answers">
+                    <td>{{answer.answer.split('_')[0] | capitalize}}</td>
+                    <td>{{answer.answer.split('_')[1] | capitalize}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
+
 
 
 </body>
