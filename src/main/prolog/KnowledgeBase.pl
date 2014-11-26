@@ -64,7 +64,7 @@ car(mercedes__benz_sprinter):- max_passengers(2), max_cargo(12), mass(3),
 car(renault_clio):- max_passengers(5), max_cargo(0.26), mass(0.9),
                     type(personal), equipment(high),
                     gearbox(manual), gearbox(automatic),
-                    feature(low_chassis), power(medium1), chassis(low).
+                    feature(low_chassis), power(medium), chassis(low).
 
 
 car(scania_v8):- max_passengers(3), max_cargo(90), mass(15),
